@@ -1,0 +1,41 @@
+.titleContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.titleContainer h1 {
+    padding-left: 40px;
+}
+
+.titleContainer button {
+    width: 20%;
+    justify-self: end;
+}
+
+.card {
+    border: solid 1px #d6d6d6;
+    border-radius: 12px;
+    padding: 0 24px 24px 36px;
+    margin: 12px 0;
+}
+
+.card h2 {
+    cursor: pointer;
+    color: darkslategray;
+}
+
+.listInit {
+    list-style: none;
+}
+
+.editBtn {
+    background-color: palegoldenrod;
+    border: none;
+    margin-right: 12px;
+}
+
+.deleteBtn {
+    background-color: tomato;
+    border: none;
+}
