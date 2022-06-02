@@ -10,6 +10,7 @@ function Boards() {
     const [lists, setLists] = useState([])
     const getList = async () => {
         const res = await axios.get('http://192.168.0.38:8000/api/v1/boards')
+        console.log(res, 'zzz');
         setLists(res.data)
     }
     const deletePost = (e, id) => {

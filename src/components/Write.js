@@ -30,7 +30,7 @@ function Write() {
         if (confirm) {
             axios.post(`http://192.168.0.38:8000/api/v1/boards`, form, {
                 headers: {
-                    'Authorization': `Bearer`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             }) //
         .then(res => {

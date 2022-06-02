@@ -33,7 +33,8 @@ function Login() {
         axios.post('http://192.168.0.38:8000/api/v1/auth/login', loginForm) //
         .then(res => {
             const {data:{token: {accessToken}}} = res
-            dispatch(setToken(accessToken))
+            // dispatch(setToken(accessToken))
+            localStorage.setItem('token', accessToken)
             navigate('/boards')
             
         })
