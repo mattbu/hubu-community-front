@@ -1,12 +1,14 @@
 import axios from "axios"
 import { useState } from "react"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
 import styles from '../css/Login.module.css'
+import { setToken } from "../store"
 
 function Login() {
-    const aaa = useSelector(state => state)
-    console.log(aaa);
+    const state = useSelector(state => state)
+    const dispatch = useDispatch()
+
     let navigate = useNavigate()
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
@@ -30,7 +32,8 @@ function Login() {
         }
         axios.post('http://192.168.0.38:8000/api/v1/auth/login', loginForm) //
         .then(res => {
-            console.log(res);
+            const {data:{token: {accessToken}}} = res
+            dispatch(setToken(accessToken))
             navigate('/boards')
             
         })
@@ -48,7 +51,7 @@ function Login() {
             <input name="password" id="password-input" type="password" placeholder="비밀번호" value={password} onChange={inputChange}/>
             <button type="submit">로그인</button>
         </form>
-        <a href="">아이디가 없으신가요?</a>
+        <Link to="/register">아이디가 없으신가요?</Link>
         </div>
     )
 }
