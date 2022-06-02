@@ -1,9 +1,12 @@
 import axios from "axios"
 import { useState } from "react"
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import styles from '../css/Login.module.css'
 
 function Login() {
+    const aaa = useSelector(state => state)
+    console.log(aaa);
     let navigate = useNavigate()
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
