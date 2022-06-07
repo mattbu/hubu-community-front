@@ -8,6 +8,8 @@ import { setToken } from "../store"
 function Login() {
     const state = useSelector(state => state)
     const dispatch = useDispatch()
+    const API_URL = process.env.REACT_APP_API_URL
+    console.log(API_URL);
 
     let navigate = useNavigate()
     const [userId, setUserId] = useState('')
@@ -30,7 +32,7 @@ function Login() {
             user_id: userId,
             password: password
         }
-        axios.post('http://192.168.0.38:8000/api/v1/auth/login', loginForm) //
+        axios.post(`${API_URL}/api/v1/auth/login`, loginForm) //
         .then(res => {
             const {data:{token: {accessToken}}} = res
             // dispatch(setToken(accessToken))

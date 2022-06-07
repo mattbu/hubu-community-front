@@ -28,7 +28,7 @@ function Register() {
             name: userName,
             password: password
         }
-        axios.post('http://192.168.0.38:8000/api/v1/auth/register', form) //
+        axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`, form) //
         .then(res => {
             console.log(res);
         })
