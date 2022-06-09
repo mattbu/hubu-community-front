@@ -6,17 +6,26 @@ import axios from "axios"
 function Boards() {
     let navigate = useNavigate()
     let params = useParams()
+    
+    const token = localStorage.getItem('token')
 
     const [lists, setLists] = useState([])
     const getList = async () => {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards`)
-        console.log(res, 'zzz');
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         setLists(res.data)
     }
     const deletePost = (e, id) => {
         const confirm = window.confirm('삭제하시겠어요?')
         if (confirm) {
-            axios.delete(`${process.env.REACT_APP_API_URL}/api/v1/boards/${id}`)
+            axios.delete(`${process.env.REACT_APP_API_URL}/api/v1/boards/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
             .then(res => {
                 alert('삭제 완료')    
                 getList()

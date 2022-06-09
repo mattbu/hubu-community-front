@@ -26,11 +26,12 @@ function Write() {
             title: title,
             description: description
         }
+        const token = localStorage.getItem('token')
         const confirm = window.confirm('글을 작성하시겠어요?')
         if (confirm) {
             axios.post(`${process.env.REACT_APP_API_URL}/api/v1/boards`, form, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${token}`
                 }
             }) //
         .then(res => {

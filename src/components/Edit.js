@@ -11,6 +11,8 @@ function Edit() {
     const [title, setTitle] = useState(task.title)
     const [description, setDescription] = useState(task.description)
 
+    const token = localStorage.getItem('token')
+
     const handleInput = (e) => {
         const {target: {name, value}} = e
         switch (name) {
@@ -31,9 +33,12 @@ function Edit() {
         }
         const confirm = window.confirm('글을 수정 하시겠어요?')
         if (confirm) {
-            axios.put(`${process.env.REACT_APP_API_URL}/api/v1/boards/${params.id}`, form) //
+            axios.put(`${process.env.REACT_APP_API_URL}/api/v1/boards/${params.id}`, form, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }) //
         .then(res => {
-            console.log(res, '하하하하하');
             if(res.data){
                 alert('수정 성공')
                 navigate('/')

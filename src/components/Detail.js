@@ -7,8 +7,13 @@ function Detail() {
     let params = useParams();
     let navigate = useNavigate();
     const [detail, setDetail] = useState({})
+    const token = localStorage.getItem('token')
     const getDetail = async () => {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards/${params.id}`)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards/${params.id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         setDetail(res.data)
     }
     useEffect(() => {

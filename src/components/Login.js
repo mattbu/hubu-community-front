@@ -9,7 +9,6 @@ function Login() {
     const state = useSelector(state => state)
     const dispatch = useDispatch()
     const API_URL = process.env.REACT_APP_API_URL
-    console.log(API_URL);
 
     let navigate = useNavigate()
     const [userId, setUserId] = useState('')
