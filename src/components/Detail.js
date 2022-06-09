@@ -8,7 +8,7 @@ function Detail() {
     let navigate = useNavigate();
     const [detail, setDetail] = useState({})
     const getDetail = async () => {
-        const res = await axios.get(`http://192.168.0.38:8000/api/v1/boards/${params.id}`)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards/${params.id}`)
         setDetail(res.data)
     }
     useEffect(() => {

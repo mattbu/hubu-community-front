@@ -10,7 +10,7 @@ function Router() {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Login />}></Route>
+                <Route path="/" element={ token ? <Boards /> : <Login/>}></Route>
                 <Route path="/boards" element={<Boards />}></Route>
                 <Route path="/register" element={<Register />}></Route>
                 <Route path="/write" element={<Write />}></Route>

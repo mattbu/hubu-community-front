@@ -28,7 +28,7 @@ function Write() {
         }
         const confirm = window.confirm('글을 작성하시겠어요?')
         if (confirm) {
-            axios.post(`http://192.168.0.38:8000/api/v1/boards`, form, {
+            axios.post(`${process.env.REACT_APP_API_URL}/api/v1/boards`, form, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }

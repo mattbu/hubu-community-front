@@ -9,14 +9,14 @@ function Boards() {
 
     const [lists, setLists] = useState([])
     const getList = async () => {
-        const res = await axios.get('http://192.168.0.38:8000/api/v1/boards')
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards`)
         console.log(res, 'zzz');
         setLists(res.data)
     }
     const deletePost = (e, id) => {
         const confirm = window.confirm('삭제하시겠어요?')
         if (confirm) {
-            axios.delete(`http://192.168.0.38:8000/api/v1/boards/${id}`)
+            axios.delete(`${process.env.REACT_APP_API_URL}/api/v1/boards/${id}`)
             .then(res => {
                 alert('삭제 완료')    
                 getList()

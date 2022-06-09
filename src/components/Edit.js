@@ -31,7 +31,7 @@ function Edit() {
         }
         const confirm = window.confirm('글을 수정 하시겠어요?')
         if (confirm) {
-            axios.put(`http://192.168.0.38:8000/api/v1/boards/${params.id}`, form) //
+            axios.put(`${process.env.REACT_APP_API_URL}/api/v1/boards/${params.id}`, form) //
         .then(res => {
             console.log(res, '하하하하하');
             if(res.data){
