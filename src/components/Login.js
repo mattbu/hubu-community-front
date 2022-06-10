@@ -36,7 +36,7 @@ function Login() {
             const {data:{token: {accessToken}}} = res
             // dispatch(setToken(accessToken))
             localStorage.setItem('token', accessToken)
-            navigate('/boards')
+            navigate('/')
             
         })
         .catch(err => {

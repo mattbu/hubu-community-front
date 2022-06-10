@@ -1,13 +1,13 @@
 import Router from "./Router";
 import { useSelector } from "react-redux";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 
 function App() {
   // const state = useSelector(state => state)
   const token = localStorage.getItem('token')
   return (
     <div>
-      <Navbar/>
+      <Header/>
       <Router />
     </div>
   );

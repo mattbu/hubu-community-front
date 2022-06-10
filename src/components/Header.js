@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom"
 
-function Navbar() {
+function Header() {
     let navigate = useNavigate()
     const token = localStorage.getItem('token')
     const logout = () => {
         localStorage.removeItem('token')
-        navigate('/')
+        alert('로그아웃 되었습니다.')
+        navigate('/login')
     }
     return (
         <div>
@@ -14,4 +15,4 @@ function Navbar() {
     )
 }
 
-export default Navbar
+export default Header

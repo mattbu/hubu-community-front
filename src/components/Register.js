@@ -1,8 +1,11 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styles from '../css/Register.module.css'
 
 function Register() {
+    let navigate = useNavigate()
+
     const [userId, setUserId] = useState('')
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
@@ -21,6 +24,22 @@ function Register() {
             default:
         }
     }
+    const login = () => {
+        const loginForm = {
+            user_id: userId,
+            password: password
+        }
+        axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/login`, loginForm) //
+        .then(res => {
+            const {data:{token: {accessToken}}} = res
+            localStorage.setItem('token', accessToken)
+            navigate('/boards')
+            
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
     const register = (e) => {
         e.preventDefault()
         const form = {
@@ -30,7 +49,7 @@ function Register() {
         }
         axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`, form) //
         .then(res => {
-            console.log(res);
+            login()
         })
         .catch(err => {
             console.log(err);
