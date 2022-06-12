@@ -39,16 +39,14 @@ function Edit() {
                 }
             }) //
         .then(res => {
-            if(res.data){
+            if (res.data) {
                 alert('수정 성공')
                 navigate('/')
-            }else{
-                alert('다시 수정 요망')
             }
-
         })
         .catch(err => {
-            alert('수정 실패')
+            alert(err.response.data.message)
+            navigate(-1)
         })
         }
     }

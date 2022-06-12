@@ -33,7 +33,7 @@ function Register() {
         .then(res => {
             const {data:{token: {accessToken}}} = res
             localStorage.setItem('token', accessToken)
-            navigate('/boards')
+            navigate('/')
             
         })
         .catch(err => {

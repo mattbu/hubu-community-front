@@ -36,7 +36,7 @@ function Write() {
             }) //
         .then(res => {
             alert('글쓰기 성공')
-            navigate('/boards')
+            navigate('/')
 
         })
         .catch(err => {

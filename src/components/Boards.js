@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import styles from '../css/Boards.module.css'
 import axios from "axios"
+import moment from "moment"
 
 function Boards() {
     let navigate = useNavigate()
@@ -30,7 +31,7 @@ function Boards() {
                 alert('삭제 완료')    
                 getList()
             }).catch(err => {
-                alert('삭제 실패!')    
+                alert(err.response.data.message)    
             })
         } else {
             alert('삭제 취소됨')
@@ -53,6 +54,8 @@ function Boards() {
                             <li key={item.id}>
                                 <div className={styles.card}>
                                     <h2 onClick={() => navigate(`/detail/${item.id}`, {state:{post:item}})}>{item.title}</h2>
+                                    <p className={styles.textMuted}>작성자: {item.user.name}</p>
+                                    <p className={styles.textMuted}>작성자: {moment(item.created_at).format('YYYY-MM-DD hh:mm')}</p>
                                     <p>{item.description}</p>
                                     <button className={styles.deleteBtn} onClick={(e) => deletePost(e, item.id)}>삭제</button>
                                 </div>

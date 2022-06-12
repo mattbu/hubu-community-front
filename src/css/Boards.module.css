@@ -25,6 +25,10 @@
     color: darkslategray;
 }
 
+.card .textMuted {
+    color: #a5a5a5;
+}
+
 .listInit {
     list-style: none;
 }
