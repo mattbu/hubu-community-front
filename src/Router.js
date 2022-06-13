@@ -30,7 +30,7 @@ function Router() {
                 />
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/register" element={<Register />}></Route>
-                <Route path="*" element={<p>There's nothing here: 404!</p>}></Route>
+                <Route path="*" element={<p>페이지가 없습니다: 404!</p>}></Route>
             </Routes>
         </>
     )
