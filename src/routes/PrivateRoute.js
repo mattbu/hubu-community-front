@@ -3,7 +3,6 @@ import { Navigate, useLocation } from "react-router-dom"
 const PrivateRoute = ({component}) => {
     const token = localStorage.getItem('token')
     const path = useLocation()
-    console.log(path.pathname, '하하');
 
     if (token) {
         return component

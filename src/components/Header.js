@@ -5,6 +5,7 @@ function Header() {
     const token = localStorage.getItem('token')
     const logout = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('userData')
         alert('로그아웃 되었습니다.')
         navigate('/login')
     }

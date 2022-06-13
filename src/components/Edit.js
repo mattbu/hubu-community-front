@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import styles from '../css/Write.module.css'
+import styles from '../scss/Write.module.scss'
 
 function Edit() {
     let navigate = useNavigate();

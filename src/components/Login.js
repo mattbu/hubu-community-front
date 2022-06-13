@@ -2,7 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-import styles from '../css/Login.module.css'
+import styles from '../scss/Login.module.scss'
 import { setToken } from "../store"
 
 function Login() {
@@ -33,9 +33,11 @@ function Login() {
         }
         axios.post(`${API_URL}/api/v1/auth/login`, loginForm) //
         .then(res => {
-            const {data:{token: {accessToken}}} = res
+            const { data: { token: { accessToken }, user}} = res
+            const parsedUserData = JSON.stringify(user)
             // dispatch(setToken(accessToken))
             localStorage.setItem('token', accessToken)
+            localStorage.setItem('userData', parsedUserData)
             navigate('/')
             
         })

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import styles from '../css/Boards.module.css'
+import styles from '../scss/Boards.module.scss'
 import axios from "axios"
 import moment from "moment"
 
@@ -9,6 +9,7 @@ function Boards() {
     let params = useParams()
     
     const token = localStorage.getItem('token')
+    const currentUser = JSON.parse(localStorage.getItem('userData'))
 
     const [lists, setLists] = useState([])
     const getList = async () => {
@@ -56,8 +57,8 @@ function Boards() {
                                     <h2 onClick={() => navigate(`/detail/${item.id}`, {state:{post:item}})}>{item.title}</h2>
                                     <p className={styles.textMuted}>작성자: {item.user.name}</p>
                                     <p className={styles.textMuted}>작성자: {moment(item.created_at).format('YYYY-MM-DD hh:mm')}</p>
-                                    <p>{item.description}</p>
-                                    <button className={styles.deleteBtn} onClick={(e) => deletePost(e, item.id)}>삭제</button>
+                                    <p className={styles.description}>{item.description}</p>
+                                    { currentUser.id === item.user_id ? <button className={styles.deleteBtn} onClick={(e) => deletePost(e, item.id)}>삭제</button> : null }
                                 </div>
                             </li>
                         )
