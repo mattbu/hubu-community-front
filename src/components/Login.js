@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import styles from '../scss/Login.module.scss'
 import { setToken } from "../store"
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
     const state = useSelector(state => state)

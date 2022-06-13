@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import styles from '../scss/Boards.module.scss'
 import axios from "axios"
 import moment from "moment"
+import {ToastContainer, toast} from 'react-toastify'
 
 function Boards() {
     let navigate = useNavigate()
@@ -11,14 +12,33 @@ function Boards() {
     const token = localStorage.getItem('token')
     const currentUser = JSON.parse(localStorage.getItem('userData'))
 
+    const notify = () => {
+        toast('🦄 Wow so easy!', {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    }
+
     const [lists, setLists] = useState([])
     const getList = async () => {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        setLists(res.data)
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            // toast.success("Success!");
+            notify()
+            setLists(res.data)
+        } catch (err) {
+            toast.error("error!");
+            console.log(err);
+        }
     }
     const deletePost = (e, id) => {
         const confirm = window.confirm('삭제하시겠어요?')
@@ -43,6 +63,7 @@ function Boards() {
     }, [])
     return (
     <> 
+     <ToastContainer />
         <div className={styles.titleContainer}>
             <h1>리스트</h1>
             <button onClick={() => navigate('/write')}>글쓰기</button>
