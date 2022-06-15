@@ -35,11 +35,11 @@ function Register() {
         }
         axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/login`, loginForm) //
         .then(res => {
-            const { data: { token: { accessToken }, user}} = res
+            const { data: { token: { accessToken }, user, message}} = res
             const parsedUserData = JSON.stringify(user)
             localStorage.setItem('token', accessToken)
             localStorage.setItem('userData', parsedUserData)
-            toast.success('asdasdsd')
+            toast.success(message)
             navigate('/')
             
         })
@@ -58,17 +58,27 @@ function Register() {
             this.certification_img = null;
           }
     }
+    const getForm = () => {
+        const form = new FormData()
+        form.append('name', userName)
+        form.append('email', userId)
+        form.append('avatar_img', avatarImg)
+        form.append('password', password)
+        return form
+    }
     const register = (e) => {
         e.preventDefault()
-        const form = {
-            email: userId,
-            name: userName,
-            password: password
+        const form = getForm()
+        const config = {
+            headers: {
+                'Content_Type': 'multipart/form-data'
+              }
         }
-        axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`, form) //
+        axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`, form, config) //
         .then(res => {
             if (res) {
-                login()
+                console.log(res);
+                // login()
             } else {
                 setUserId('')
                 setUserName('')

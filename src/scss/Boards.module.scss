@@ -8,8 +8,12 @@
             margin: 0;
         }
         .writeButton {
+            padding: 0.5rem 1rem;
+            background-color: #51557E;
             border: none;
-            padding: 0.5rem 2rem;
+            &:hover {
+                background-color: #51557E;
+            }
         }
     }
     .listInit {

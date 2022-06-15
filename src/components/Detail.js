@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import { Button } from 'react-bootstrap'
 
 function Detail() {
     let params = useParams();
@@ -29,7 +30,7 @@ function Detail() {
             <p className={styles.textMuted}>작성자: {detail.user?.name}</p>
             <p className={styles.textMuted}>작성일: {moment(detail.created_at).format('YYYY-MM-DD hh:mm')}</p>
             <p className={styles.description}>{detail.description}</p>
-            { currentUser.id === detail.user?.id ? <button onClick={() => navigate(`/detail/${params.id}/edit`, { state: {task: detail}})}>수정</button> : null }
+            { currentUser.id === detail.user?.id ? <Button className={styles.editBtn} onClick={() => navigate(`/detail/${params.id}/edit`, { state: {task: detail}})}>수정</Button> : null }
         </div>
     )
 }

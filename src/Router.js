@@ -7,6 +7,7 @@ import Detail from './components/Detail'
 import Edit from "./components/Edit"
 import PrivateRoute from "./routes/PrivateRoute"
 function Router() {
+    const token = localStorage.getItem('token')
     return (
         <>
             <Routes>
@@ -28,7 +29,7 @@ function Router() {
                     path="/detail/:id/edit"
                     element={<PrivateRoute component={<Edit />} />} 
                 />
-                <Route path="/login" element={<Login />}></Route>
+                <Route path="/login" element={ !token ? <Login /> : <Navigate to="/"></Navigate>}></Route>
                 <Route path="/register" element={<Register />}></Route>
                 <Route path="*" element={<p>페이지가 없습니다: 404!</p>}></Route>
             </Routes>

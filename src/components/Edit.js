@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import styles from '../scss/Write.module.scss'
+import styles from '../scss/Edit.module.scss'
 
 function Edit() {
     let navigate = useNavigate();
@@ -51,14 +52,14 @@ function Edit() {
         }
     }
     return (
-        <div className={styles.writeContainer}>
+        <div className={styles.editContainer}>
             <h1>글 수정</h1>
             <form onSubmit={editTask}>
                 <label htmlFor="title">제목</label>
                 <input id="title" name='title' type="text" value={title} onChange={handleInput} />
                 <label htmlFor="description" name='description'>내용</label>
                 <textarea name="description" id="description" cols="30" rows="10" value={description} onChange={handleInput}></textarea>
-                <button type="submit">수정</button>
+                <Button className={styles.editBtn} type="submit">수정</Button>
             </form>
         </div>
     )

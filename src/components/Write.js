@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import styles from '../scss/Write.module.scss'
 
@@ -52,7 +53,7 @@ function Write() {
                 <input id="title" name='title' type="text" value={title} onChange={handleInput} />
                 <label htmlFor="description" name='description'>내용</label>
                 <textarea name="description" id="description" cols="30" rows="10" value={description} onChange={handleInput}></textarea>
-                <button type="submit">저장</button>
+                <Button className={styles.writeBtn} type="submit">저장</Button>
             </form>
         </div>
     )

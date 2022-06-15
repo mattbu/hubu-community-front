@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import styles from '../scss/Boards.module.scss'
 import axios from "../utils/axios"
 import moment from "moment"
+import {Button} from 'react-bootstrap'
 
 function Boards() {
     let navigate = useNavigate()
@@ -49,7 +50,7 @@ function Boards() {
         <div className={styles.boardContainer}>
             <div className={styles.titleSection}>
                 <h1>리스트</h1>
-                <button className={styles.writeButton} onClick={() => navigate('/write')}>글쓰기</button>
+                <Button className={styles.writeButton} onClick={() => navigate('/write')}>글쓰기</Button>
             </div>
             <ul className={styles.listInit}>
                 {
