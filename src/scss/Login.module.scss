@@ -1,3 +1,13 @@
 .loginContainer {
     padding: 60px;
+    .loginBtn {
+        padding: 0.5rem 2rem;
+        margin-top: 16px;
+        background-color: #51557E;
+        border: none;
+    }
+    .loginLink {
+        margin-top: 16px;
+        color: #51557E;
+    }
 }

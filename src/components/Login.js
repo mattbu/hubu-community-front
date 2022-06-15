@@ -1,10 +1,10 @@
-import axios from "axios"
+import axios from "../utils/axios"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import styles from '../scss/Login.module.scss'
 import { setToken } from "../store"
-import 'react-toastify/dist/ReactToastify.css';
+import { Button } from "react-bootstrap"
 
 function Login() {
     const state = useSelector(state => state)
@@ -48,15 +48,15 @@ function Login() {
     }
     return (
         <div className={styles.loginContainer}>
-        <h1>로그인</h1>
-        <form onSubmit={login}>
-            <label htmlFor="id-input">아이디</label>
-            <input name="id" id="id-input" type="text" placeholder="아이디" value={userId} onChange={inputChange}/>
-            <label htmlFor="password-input">비밀번호</label>
-            <input name="password" id="password-input" type="password" placeholder="비밀번호" value={password} onChange={inputChange}/>
-            <button type="submit">로그인</button>
-        </form>
-        <Link to="/register">아이디가 없으신가요?</Link>
+            <h1>로그인</h1>
+            <form onSubmit={login}>
+                <label htmlFor="id-input">아이디</label>
+                <input name="id" id="id-input" type="text" placeholder="아이디" value={userId} onChange={inputChange}/>
+                <label htmlFor="password-input" className={'mt-3'}>비밀번호</label>
+                <input name="password" id="password-input" type="password" placeholder="비밀번호" value={password} onChange={inputChange}/>
+                <Button type="submit" className={styles.loginBtn}>로그인</Button>
+            </form>
+            <Link to="/register" className={styles.loginLink}>아이디가 없으신가요?</Link>
         </div>
     )
 }

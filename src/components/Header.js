@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom"
+import styles from '../scss/Header.module.scss'
+import { Button } from 'react-bootstrap';
 
 function Header() {
     let navigate = useNavigate()
@@ -11,7 +13,11 @@ function Header() {
     }
     return (
         <div>
-            { token ? <button onClick={logout}>로그아웃</button> : null}
+            {
+                token ? 
+                <div className={styles.headerContainer}>
+                    <Button className={styles.logoutBtn} onClick={logout}>로그아웃</Button>
+                </div> : null}
         </div>
     )
 }

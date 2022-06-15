@@ -1,3 +1,29 @@
 .registerContainer {
     padding: 60px;
+    .avatarPreview {
+        width: 100px;
+        height: 100px;
+        background-image: url('../asset/images/avatar-1577909_960_720.png');
+        object-fit: contain;
+        border-radius: 50%;
+        img {
+            width: 100%;
+            height: 100%;
+            max-height: auto;
+            border-radius: inherit;
+            object-fit: cover;
+        }
+    }
+    .avatarInput {
+        background-color: #51557E;
+        &:after {
+            background-color: red;
+        }
+    }
+    .registerBtn {
+        padding: 0.5rem 2rem;
+        margin-top: 16px;
+        background-color: #51557E;
+        border: none;
+    }
 }
