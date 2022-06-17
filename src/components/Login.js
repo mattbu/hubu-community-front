@@ -1,4 +1,4 @@
-import axios from "../utils/axios"
+import {setHeadersToken, $axios} from "../utils/axios"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
@@ -26,25 +26,35 @@ function Login() {
             default:
         }
     }
-    const login = (e) => {
+    const getUserInfo = async () => {
+        try {
+            $axios.get(`${API_URL}/api/v1/user_information`).then(res => {
+                const {data: {data}} = res
+                const parsedUserData = JSON.stringify(data)
+                localStorage.setItem('userData', parsedUserData)
+                navigate('/')
+            }).catch(err => {
+                console.log(err);
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const login = async (e) => {
         e.preventDefault()
         const loginForm = {
             user_id: userId,
             password: password
         }
-        axios.post(`${API_URL}/api/v1/auth/login`, loginForm) //
-        .then(res => {
-            const { data: { token: { accessToken }, user}} = res
-            const parsedUserData = JSON.stringify(user)
-            // dispatch(setToken(accessToken))
+        try {
+            const res = await $axios.post(`${API_URL}/api/v1/auth/login`, loginForm)
+            const { data: { token: { accessToken }}} = res
             localStorage.setItem('token', accessToken)
-            localStorage.setItem('userData', parsedUserData)
-            navigate('/')
-            
-        })
-        .catch(err => {
+            setHeadersToken(accessToken)
+            getUserInfo()
+        } catch (err) {
             console.log(err);
-        })
+        }
     }
     return (
         <div className={styles.loginContainer}>

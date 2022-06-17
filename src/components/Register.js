@@ -1,4 +1,4 @@
-import axios from '../utils/axios'
+import {$axios, setHeadersToken} from '../utils/axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from '../scss/Register.module.scss'
@@ -7,12 +7,14 @@ import { Button, Form } from 'react-bootstrap'
 
 function Register() {
     let navigate = useNavigate()
+    const API_URL = process.env.REACT_APP_API_URL
 
     const [userId, setUserId] = useState('')
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [previewImg, setPreviewImg] = useState('');
     const [avatarImg, setAvatarImg] = useState(null);
+
     const inputChange = (e) => {
         const {target: {name, value}} = e
         switch (name) {
@@ -28,36 +30,49 @@ function Register() {
             default:
         }
     }
-    const login = () => {
+    const getUserInfo = async () => {
+        try {
+            $axios.get(`${API_URL}/api/v1/user_information`).then(res => {
+                const {data: {data}} = res
+                const parsedUserData = JSON.stringify(data)
+                localStorage.setItem('userData', parsedUserData)
+                navigate('/')
+            }).catch(err => {
+                console.log(err);
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const login = (token) => {
         const loginForm = {
             user_id: userId,
             password: password
         }
-        axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/login`, loginForm) //
+        $axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/login`, loginForm) //
         .then(res => {
-            const { data: { token: { accessToken }, user, message}} = res
-            const parsedUserData = JSON.stringify(user)
+            const { data: { token: { accessToken }, message}} = res
             localStorage.setItem('token', accessToken)
-            localStorage.setItem('userData', parsedUserData)
+            setHeadersToken(accessToken)
             toast.success(message)
-            navigate('/')
-            
+            getUserInfo()
         })
         .catch(err => {
             console.log(err);
         })
     }
+
     const uploadAvatar = (e) => {
         const file = e.target.files[0];
     
         if (file !== undefined) {
             setPreviewImg(URL.createObjectURL(file))
             setAvatarImg(file)
-            console.log(file);
-          } else {
+        } else {
             this.certification_img = null;
-          }
+        }
     }
+
     const getForm = () => {
         const form = new FormData()
         form.append('name', userName)
@@ -66,6 +81,7 @@ function Register() {
         form.append('password', password)
         return form
     }
+
     const register = (e) => {
         e.preventDefault()
         const form = getForm()
@@ -74,11 +90,11 @@ function Register() {
                 'Content_Type': 'multipart/form-data'
               }
         }
-        axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`, form, config) //
+        $axios.post(`${process.env.REACT_APP_API_URL}/api/v1/auth/register`, form, config) //
         .then(res => {
             if (res) {
-                console.log(res);
-                // login()
+                const {data: {token}} = res
+                login(token)
             } else {
                 setUserId('')
                 setUserName('')
@@ -86,7 +102,7 @@ function Register() {
             }
         })
         .catch(err => {
-            console.log(err,111);
+            console.log(err);
         })
     }
     return (

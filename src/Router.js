@@ -5,6 +5,7 @@ import Boards from "./components/Boards"
 import Write from "./components/Write"
 import Detail from './components/Detail'
 import Edit from "./components/Edit"
+import Info from './components/Info'
 import PrivateRoute from "./routes/PrivateRoute"
 function Router() {
     const token = localStorage.getItem('token')
@@ -28,6 +29,10 @@ function Router() {
                  <Route
                     path="/detail/:id/edit"
                     element={<PrivateRoute component={<Edit />} />} 
+                />
+                 <Route
+                    path="/my"
+                    element={<PrivateRoute component={<Info />} />} 
                 />
                 <Route path="/login" element={ !token ? <Login /> : <Navigate to="/"></Navigate>}></Route>
                 <Route path="/register" element={<Register />}></Route>

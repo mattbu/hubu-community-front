@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import styles from '../scss/Boards.module.scss'
-import axios from "../utils/axios"
+import {$axios} from "../utils/axios"
 import moment from "moment"
 import {Button} from 'react-bootstrap'
 
@@ -14,7 +14,7 @@ function Boards() {
     const [lists, setLists] = useState([])
     const getList = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards`, {
+            const res = await $axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -27,7 +27,7 @@ function Boards() {
     const deletePost = (e, id) => {
         const confirm = window.confirm('삭제하시겠어요?')
         if (confirm) {
-            axios.delete(`${process.env.REACT_APP_API_URL}/api/v1/boards/${id}`, {
+            $axios.delete(`${process.env.REACT_APP_API_URL}/api/v1/boards/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
