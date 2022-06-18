@@ -1,5 +1,5 @@
 .boardContainer {
-    padding: 60px;
+    margin-top: 60px;
     .titleSection {
         display: flex;
         flex-direction: row;
@@ -22,7 +22,7 @@
         .card {
             border: solid 1px #d6d6d6;
             border-radius: 12px;
-            padding: 0 24px 24px 36px;
+            padding: 36px;
             margin: 12px 0;
             h2 {
                 cursor: pointer;

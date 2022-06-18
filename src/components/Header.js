@@ -14,28 +14,14 @@ function Header() {
         localStorage.removeItem('token')
         localStorage.removeItem('userData')
         alert('로그아웃 되었습니다.')
-        // navigate('/')
+        navigate('/')
     }
     return (
         <>
             <Navbar bg="light" sticky="top" expand="lg" className={styles.headerContainer}>
                 <Container>
                     <Button className={styles.backBtn} onClick={() => navigate(-1)}><FiArrowLeft/></Button>
-                    <Navbar.Brand href="#home">HUBU</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav>
-                    </Navbar.Collapse>
+                    <Link to="/" className={styles.navBrand}>HUBU</Link>
                     { token ? 
                         <Dropdown>
                             <Dropdown.Toggle className={styles.dropdownToggle}>
@@ -44,7 +30,7 @@ function Header() {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item to="/my">마이페이지</Dropdown.Item>
+                                <Link to="/my">마이페이지</Link>
                                 <Dropdown.Item>
                                     <Button className={styles.logoutBtn} onClick={logout}>로그아웃</Button>
                                 </Dropdown.Item>

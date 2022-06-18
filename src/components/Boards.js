@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import styles from '../scss/Boards.module.scss'
-import {$axios} from "../utils/axios"
+import { $axios } from "../utils/axios"
 import moment from "moment"
-import {Button} from 'react-bootstrap'
+import { Button, Container, Row, Col, Card } from 'react-bootstrap'
 
 function Boards() {
     let navigate = useNavigate()
@@ -47,29 +47,35 @@ function Boards() {
     }, [])
     return (
     <> 
-        <div className={styles.boardContainer}>
-            <div className={styles.titleSection}>
-                <h1>리스트</h1>
-                <Button className={styles.writeButton} onClick={() => navigate('/write')}>글쓰기</Button>
-            </div>
-            <ul className={styles.listInit}>
-                {
-                    lists.map(item => {
-                        return (
-                            <li key={item.id}>
-                                <div className={styles.card}>
-                                    <h2 onClick={() => navigate(`/detail/${item.id}`, {state:{post:item}})}>{item.title}</h2>
-                                    <p className={styles.textMuted}>작성자: {item.user.name}</p>
-                                    <p className={styles.textMuted}>작성자: {moment(item.created_at).format('YYYY-MM-DD hh:mm')}</p>
-                                    <p className={styles.description}>{item.description}</p>
-                                    { currentUser.id === item.user_id ? <button className={styles.deleteBtn} onClick={(e) => deletePost(e, item.id)}>삭제</button> : null }
-                                </div>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
-        </div>
+        <Container className={styles.boardContainer}>
+            <Row>
+                <Col>
+                    <div className={styles.titleSection}>
+                        <h1>리스트</h1>
+                        <Button className={styles.writeButton} onClick={() => navigate('/write')}>글쓰기</Button>
+                    </div>
+                    <ul className={styles.listInit}>
+                        {
+                            lists.map(item => {
+                                return (
+                                    <li key={item.id}>
+                                        <Card className={styles.card}>
+                                            <div className={styles.titleSection}>
+                                                <h2 onClick={() => navigate(`/detail/${item.id}`, {state:{post:item}})}>{item.title}</h2>
+                                                { currentUser.id === item.user_id ? <Button className={styles.deleteBtn} onClick={(e) => deletePost(e, item.id)}>삭제</Button> : null }
+                                            </div>
+                                            <p className={styles.textMuted}>작성자: {item.user.name}</p>
+                                            <p className={styles.textMuted}>작성자: {moment(item.created_at).format('YYYY-MM-DD hh:mm')}</p>
+                                            <p className={styles.description}>{item.description}</p>
+                                        </Card>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </Col>
+            </Row>
+        </Container>
     </>
     )
 }
