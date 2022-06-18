@@ -8,6 +8,7 @@ import { Button, Container, Row, Col, Card } from 'react-bootstrap'
 function Boards() {
     let navigate = useNavigate()
     
+    const API_URL = process.env.REACT_APP_API_URL
     const token = localStorage.getItem('token')
     const currentUser = JSON.parse(localStorage.getItem('userData'))
 
@@ -55,22 +56,43 @@ function Boards() {
                         <Button className={styles.writeButton} onClick={() => navigate('/write')}>글쓰기</Button>
                     </div>
                     <ul className={styles.listInit}>
-                        {
+                        { lists.length > 0 ? 
                             lists.map(item => {
                                 return (
                                     <li key={item.id}>
                                         <Card className={styles.card}>
-                                            <div className={styles.titleSection}>
-                                                <h2 onClick={() => navigate(`/detail/${item.id}`, {state:{post:item}})}>{item.title}</h2>
-                                                { currentUser.id === item.user_id ? <Button className={styles.deleteBtn} onClick={(e) => deletePost(e, item.id)}>삭제</Button> : null }
-                                            </div>
-                                            <p className={styles.textMuted}>작성자: {item.user.name}</p>
-                                            <p className={styles.textMuted}>작성자: {moment(item.created_at).format('YYYY-MM-DD hh:mm')}</p>
+                                            <Container className={styles.cardHeader}>
+                                                <Row>
+                                                    <Col>
+                                                        <h2 onClick={() => navigate(`/detail/${item.id}`, {state:{post:item}})}>{item.title}</h2>
+                                                        <h6 className={styles.textMuted}>{moment(item.created_at).format('YYYY-MM-DD hh:mm')}</h6>
+                                                    </Col>
+                                                    { currentUser.id === item.user_id ? <Col xs={3} className="text-right">
+                                                        <Button className={styles.deleteBtn} onClick={(e) => deletePost(e, item.id)}>삭제</Button>
+                                                    </Col> : null 
+                                                    }
+                                                </Row>
+                                            </Container>
+                                            <Container className="px-0 mt-2">
+                                                <Row>
+                                                    <Col xs={1}>
+                                                        {
+                                                            item.user.avatar_img ? <div className={styles.avatarPreview}><img src={API_URL+item.user.avatar_img}/></div>
+                                                            : <div className={styles.avatarPreview} />
+                                                        }
+                                                    </Col>
+                                                    <Col>
+                                                        <h6 className={styles.userName}>{item.user.name}</h6>
+                                                        <h6 className={styles.userEmail}>{item.user.email}</h6>
+                                                    </Col>
+                                                </Row>
+                                            </Container>
                                             <p className={styles.description}>{item.description}</p>
                                         </Card>
                                     </li>
                                 )
                             })
+                            : <h3 className={styles.noContent}>게시글이 없습니다.</h3>
                         }
                     </ul>
                 </Col>

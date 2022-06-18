@@ -1,5 +1,9 @@
 .infoContainer {
     margin-top: 60px;
+    &Form {
+        padding: 40px!important;
+        background-color: white;
+    }
     .avatarFileGroup {
         display: inline-flex;
         align-items: center;

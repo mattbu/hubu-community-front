@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { Button } from 'react-bootstrap';
+import { Button, Container, Row, Col } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import styles from '../scss/Edit.module.scss'
 
@@ -52,16 +52,26 @@ function Edit() {
         }
     }
     return (
-        <div className={styles.editContainer}>
-            <h1>글 수정</h1>
-            <form onSubmit={editTask}>
-                <label htmlFor="title">제목</label>
-                <input id="title" name='title' type="text" value={title} onChange={handleInput} />
-                <label htmlFor="description" name='description'>내용</label>
-                <textarea name="description" id="description" cols="30" rows="10" value={description} onChange={handleInput}></textarea>
-                <Button className={styles.editBtn} type="submit">수정</Button>
-            </form>
-        </div>
+        <>
+            <Container className={styles.editContainer}>
+                <Row>
+                    <Col>
+                        <h1>글 수정</h1>
+                        <Container className="px-2">
+                            <Row>
+                                <Col as="form" onSubmit={editTask}>
+                                    <label htmlFor="title">제목</label>
+                                    <input id="title" name='title' type="text" value={title} onChange={handleInput} />
+                                    <label htmlFor="description" name='description'>내용</label>
+                                    <textarea name="description" id="description" cols="30" rows="10" value={description} onChange={handleInput}></textarea>
+                                    <Button className={styles.editBtn} type="submit">수정</Button>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     )
 }
 export default Edit

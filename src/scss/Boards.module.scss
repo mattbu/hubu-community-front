@@ -22,16 +22,49 @@
         .card {
             border: solid 1px #d6d6d6;
             border-radius: 12px;
-            padding: 36px;
+            padding: 24px 24px 12px 24px;
             margin: 12px 0;
+            &Header {
+                padding: 0;
+                .deleteBtn {
+                    background-color: tomato;
+                    border: none;
+                    padding: 0.5rem 2rem;
+                }
+            }
+            .avatarPreview {
+                width: 40px;
+                height: 40px;
+                background-color: red;
+                object-fit: contain;
+                border-radius: 50%;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    max-height: auto;
+                    border-radius: inherit;
+                    object-fit: cover;
+                }
+            }
             h2 {
                 cursor: pointer;
                 color: darkslategray;
+            }
+            h6 {
+                font-size: 12px;
+                margin-top: 2px;
+            }
+            .userName {
+                color: #51557E;
+            }
+            .userEmail {
+                color: #a2a5cd;
             }
             .textMuted {
                 color: #a5a5a5;
             }
             .description {
+                margin-top: 20px;
                 overflow: hidden;
                 white-space: pre-wrap;
                 text-overflow: ellipsis;
@@ -40,11 +73,10 @@
                 -webkit-box-orient: vertical;
                 word-break: keep-all;   // 문단으로 끊어져서 줄바꿈 됨
             }
-            .deleteBtn {
-                background-color: tomato;
-                border: none;
-                padding: 0.5rem 2rem;
-            }
         }
+    }
+    .noContent {
+        margin-top: 120px;
+        text-align: center;
     }
 }

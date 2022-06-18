@@ -1,5 +1,9 @@
 .writeContainer {
-    padding: 60px;
+    margin-top: 60px;
+    form {
+        padding: 40px!important;
+        background-color: white;
+    }
     .writeBtn {
         margin-top: 8px;
         padding: 0.5rem 1rem;

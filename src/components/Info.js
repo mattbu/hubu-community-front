@@ -53,7 +53,6 @@ function Info () {
                 'Content_Type': 'multipart/form-data'
             }
         }
-        console.log(userName);
         const updateUser = $axios.post(`${API_URL}/api/v1/user_information`, form, config)
         updateUser.then(res => {
             const {data: {data, message}} = res
@@ -84,11 +83,10 @@ function Info () {
          <Container className={styles.infoContainer}>
             <Row>
                 <Col>
-                <h1>마이페이지</h1>
-                <Card className={'py-4'}>
-                    <Container>
+                    <h1>마이페이지</h1>
+                    <Container className="px-2">
                         <Row>
-                            <Col as="form" onSubmit={editInfo}>
+                            <Col as="form" onSubmit={editInfo} className={styles.infoContainerForm}>
                                 <Form.Group controlId="formFile" className={`${styles.avatarFileGroup} mb-3`}>
                                     <Form.Label>
                                     {
@@ -115,7 +113,6 @@ function Info () {
                             </Col>
                         </Row>
                     </Container>
-                </Card>
                 </Col>
             </Row>
          </Container>
