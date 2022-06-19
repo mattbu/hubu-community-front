@@ -13,6 +13,7 @@ function Comments() {
 
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
+    const [reply, setReply] = useState('');
 
     let params = useParams()
 
@@ -38,8 +39,20 @@ function Comments() {
         })
     }
     const inputChange = (e) => {
-        const {target: {value}} = e
-        setComment(value)
+        const {target: {value, name}} = e
+        switch (name) {
+            case 'comment':
+                setComment(value)
+                break
+            case 'reply':
+                setReply(value)
+                break
+            default:
+        } 
+    }
+    const openReplyInput = (id) => {
+        const input = document.getElementById(`reply-${id}`)
+        input.hidden = !input.hidden
     }
     useEffect(() => {
         setHeadersToken(token)
@@ -69,8 +82,23 @@ function Comments() {
                                                                 <h6 className={styles.date}>{moment(comment.created_at).format('YYYY-MM-DD hh:mm')}</h6>
                                                             </Col>
                                                         </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                {comment.comment}
+                                                            </Col>
+                                                            <Col xs={2} md={4} className="text-right ps-0">
+                                                                <Button className={styles.replyBtn} onClick={() => openReplyInput(comment.id)} type="button">답글쓰기</Button>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row className="mt-2" id={`reply-${comment.id}`} hidden>
+                                                            <Col>
+                                                                <InputGroup>
+                                                                    <FormControl name="reply" placeholder="답글을 남겨보세요." type="text" value={reply} onChange={inputChange}/>
+                                                                    <Button className={styles.enrollBtn} type="submit">등록</Button>
+                                                                </InputGroup>
+                                                            </Col>
+                                                        </Row>
                                                     </Container>
-                                                    {comment.comment}
                                                 </Card>
                                             )
                                         })
@@ -80,8 +108,8 @@ function Comments() {
                             <Row className="mt-3">
                                 <Col as="form" onSubmit={postComment}>
                                     <InputGroup>
-                                        <FormControl placeholder="댓글을 남겨보세요." type="text" value={comment} onChange={inputChange}/>
-                                        <Button className={styles.enrollBtn}>등록</Button>
+                                        <FormControl name="comment" placeholder="댓글을 남겨보세요." type="text" value={comment} onChange={inputChange}/>
+                                        <Button className={styles.enrollBtn} type="submit">등록</Button>
                                     </InputGroup>
                                 </Col>
                             </Row>

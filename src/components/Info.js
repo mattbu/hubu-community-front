@@ -12,7 +12,7 @@ function Info () {
 
     const [userName, setUserName] = useState('')
     const [userEmail, setUserEmail] = useState('')
-    const [newPassword, setNewPassword] = useState('')
+    const [newPassword, setNewPassword] = useState("")
 
     const [defaultImg, setDefaultImg] = useState('');
     const [newImg, setNewImg] = useState('');

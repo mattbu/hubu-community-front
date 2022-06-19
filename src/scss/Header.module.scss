@@ -19,6 +19,14 @@
         &:hover {
             background-color: transparent;
         }
+        &:focus {
+            background-color: transparent;
+            box-shadow: none;
+        }
+        &:active {
+            background-color: transparent;
+            box-shadow: none!important;
+        }
     }
     .avatarPreview {
         width: 30px;

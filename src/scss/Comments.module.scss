@@ -13,6 +13,19 @@
     }
     .enrollBtn {
         background-color: #51557E;
+        color: white;
+        &:hover {
+            background-color: #51557E;
+            color: white;
+        }
+        &:focus {
+            background-color: #51557E;
+            color: white;
+            box-shadow: none;
+        }
+        &:active {
+            box-shadow: none!important;
+        }
     }
     .avatarPreview {
         width: 40px;
@@ -31,5 +44,22 @@
     .date {
         font-size: 10px;
         color: #A5A5A5;
+    }
+    .replyBtn {
+        background-color: transparent;
+        color: #51557E;
+        font-size: 12px;
+        &:hover {
+            background-color: transparent;
+            color: #51557E;
+        }
+        &:focus {
+            background-color: transparent;
+            color: #51557E;
+            box-shadow: none;
+        }
+        &:active {
+            box-shadow: none!important;
+        }
     }
 }
