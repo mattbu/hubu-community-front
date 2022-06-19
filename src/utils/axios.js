@@ -10,8 +10,13 @@ export const $axios = axios.create({
 
 export const setHeadersToken = (token) => {
     $axios.interceptors.request.use(config => {
-      config.headers.Authorization = `Bearer ${token}`;
-      return config;
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`
+            return config;
+        } else {
+            config.headers.Authorization = ''
+            return config;
+        }
     });
 };
 

@@ -15,12 +15,14 @@ function Header() {
     const [show, setShow] = useState(false)
 
     const logout = () => {
+        navigate('/')
+        toast.success('로그아웃 되었습니다.')
         localStorage.removeItem('token')
         localStorage.removeItem('userData')
-        setTimeout(() => {
-            toast.success('로그아웃 되었습니다.')
-            navigate('/')
-        }, 0)
+        // setTimeout(() => {
+        //     toast.success('로그아웃 되었습니다.')
+        //     navigate('/')
+        // }, 0)
     }
     return (
         <>

@@ -6,12 +6,19 @@ const PrivateRoute = ({component}) => {
     const {pathname} = useLocation()
     if (token) {
         return component
-    } else if (!token && pathname !== '/') {
-        toast.error('접근 권한이 없습니다. 로그인을 해주세요.')
-        return <Navigate to="/login"></Navigate>
-    } else if (!token && pathname === '/' ) {
+    } else {
+        if (pathname !== '/') {
+            toast.error('접근 권한이 없습니다. 로그인을 해주세요.')
+        }
         return <Navigate to="/login"></Navigate>
     }
+    
+    // else if (!token && pathname !== '/') {
+    //     toast.error('접근 권한이 없습니다. 로그인을 해주세요.')
+    //     return <Navigate to="/login"></Navigate>
+    // } else if (!token && pathname === '/' ) {
+    //     return <Navigate to="/login"></Navigate>
+    // }
 }
 
 export default PrivateRoute

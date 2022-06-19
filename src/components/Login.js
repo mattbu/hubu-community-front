@@ -1,5 +1,5 @@
 import { setHeadersToken, $axios } from "../utils/axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import styles from '../scss/Login.module.scss'
@@ -26,7 +26,7 @@ function Login() {
             default:
         }
     }
-    const getUserInfo = async () => {
+    const getUserInfo = () => {
         try {
             $axios.get(`${API_URL}/api/v1/user_information`).then(res => {
                 const {data: {data}} = res
@@ -56,6 +56,7 @@ function Login() {
             console.log(err);
         }
     }
+    useEffect(() => {}, [])
     return (
         <div className={styles.loginContainer}>
             <h1>로그인</h1>

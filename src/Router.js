@@ -6,6 +6,7 @@ import Write from "./components/Write"
 import Detail from './components/Detail'
 import Edit from "./components/Edit"
 import Info from './components/Info'
+import NotFound from "./components/NotFound"
 import PrivateRoute from "./routes/PrivateRoute"
 function Router() {
     const token = localStorage.getItem('token')
@@ -36,7 +37,7 @@ function Router() {
                 />
                 <Route path="/login" element={ !token ? <Login /> : <Navigate to="/"></Navigate>}></Route>
                 <Route path="/register" element={<Register />}></Route>
-                <Route path="*" element={<p>페이지가 없습니다: 404!</p>}></Route>
+                <Route path="*" element={<NotFound />}></Route>
             </Routes>
         </>
     )
