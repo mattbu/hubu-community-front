@@ -27,7 +27,7 @@ function Header() {
     return (
         <>
             <Navbar bg="light" sticky="top" expand="lg" className={styles.headerContainer}>
-                <Container>
+                <Container fluid>
                     <Row className="justify-content-between w-100">
                         <Col xs={4} className="d-inline-flex">
                             <Button className={styles.backBtn} onClick={() => navigate(-1)}><FiArrowLeft/></Button>

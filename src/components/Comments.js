@@ -25,7 +25,7 @@ function Comments() {
             console.log(err);
         })
     }
-    const postComment = (e, id) => {
+    const replyComment = (e, id) => {
         e.preventDefault()
         $axios.post(`api/v1/comments/${id}/reply`, {
             user_id: currentUser.id,
@@ -38,13 +38,14 @@ function Comments() {
             console.log(err);
         })
     }
-    const replyComment = (e) => {
+    const postComment = (e) => {
         e.preventDefault()
         $axios.post(`api/v1/comments/${params.id}`, {
             user_id: currentUser.id,
             comment: comment
         }).then(res => {
             const {data: {message}} = res
+            setComment('')
             getComments()
             toast.success(message)
         }).catch(err => {
@@ -132,7 +133,7 @@ function Comments() {
                                                                 : null
                                                             }
                                                         </Row>
-                                                        <Row className="mt-2" id={`reply-${comment.id}`} hidden as="form" onSubmit={(e) => postComment(e, comment.id)}>
+                                                        <Row className="mt-2" id={`reply-${comment.id}`} hidden as="form" onSubmit={(e) => replyComment(e, comment.id)}>
                                                             <Col>
                                                                 <InputGroup>
                                                                     <FormControl name="reply" placeholder="답글을 남겨보세요." type="text" value={reply} onChange={inputChange}/>
