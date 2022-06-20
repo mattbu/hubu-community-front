@@ -4,6 +4,7 @@ import styles from '../scss/Boards.module.scss'
 import { $axios } from "../utils/axios"
 import moment from "moment"
 import { Button, Container, Row, Col, Card } from 'react-bootstrap'
+import { toast } from 'react-toastify'
 
 function Boards() {
     let navigate = useNavigate()
@@ -26,7 +27,7 @@ function Boards() {
         }
     }
     const deletePost = (e, id) => {
-        const confirm = window.confirm('삭제하시겠어요?')
+        const confirm = window.confirm('삭제 하시겠어요?')
         if (confirm) {
             $axios.delete(`${process.env.REACT_APP_API_URL}/api/v1/boards/${id}`, {
                 headers: {
@@ -34,10 +35,11 @@ function Boards() {
                 }
             })
             .then(res => {
-                alert('삭제 완료')    
+                const { data: {message}} = res
+                toast.success(message)
                 getList()
             }).catch(err => {
-                alert(err.response.data.message)    
+                toast.error(err.response.data.message)
             })
         } else {
             alert('삭제 취소됨')

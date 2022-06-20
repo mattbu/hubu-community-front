@@ -9,7 +9,7 @@ const persistConfig = {
 
 const token = createSlice({
     name: 'token',
-    initialState: '토큰',
+    initialState: '',
     reducers: {
         setToken(state, action) {
             return action.payload

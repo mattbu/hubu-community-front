@@ -4,6 +4,7 @@ import { Button, Navbar, Container, Row, Col, NavDropdown, Nav, Dropdown } from 
 import { FiArrowLeft } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify'
+import { $axios, setHeadersToken } from '../utils/axios'
 
 function Header() {
     let navigate = useNavigate()
@@ -19,11 +20,23 @@ function Header() {
         toast.success('로그아웃 되었습니다.')
         localStorage.removeItem('token')
         localStorage.removeItem('userData')
+        localStorage.removeItem('isLogin')
         // setTimeout(() => {
         //     toast.success('로그아웃 되었습니다.')
         //     navigate('/')
         // }, 0)
     }
+    useEffect(() => {
+        // setHeadersToken(token)
+        // const fetchUserInfo = $axios.get(`${API_URL}/api/v1/user_information`)
+        // fetchUserInfo.then(res => {
+        //     const {data: {data}} = res
+        //     setUserName(data.name)
+        //     setUserEmail(data.email)
+        //     setDefaultImg(data.avatar_img)
+        //     console.log(data.avatar_img);
+        // })
+    }, [])
     return (
         <>
             <Navbar bg="light" sticky="top" expand="lg" className={styles.headerContainer}>

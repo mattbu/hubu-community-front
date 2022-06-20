@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import styles from '../scss/Edit.module.scss'
+import { toast } from 'react-toastify'
 
 function Edit() {
     let navigate = useNavigate();
@@ -41,12 +42,12 @@ function Edit() {
             }) //
         .then(res => {
             if (res.data) {
-                alert('수정 성공')
+                toast.success(res.data.message)
                 navigate('/')
             }
         })
         .catch(err => {
-            alert(err.response.data.message)
+            toast.error(err.response.data.message)
             navigate(-1)
         })
         }
@@ -62,7 +63,7 @@ function Edit() {
                                 <Col as="form" onSubmit={editTask}>
                                     <label htmlFor="title">제목</label>
                                     <input id="title" name='title' type="text" value={title} onChange={handleInput} />
-                                    <label htmlFor="description" name='description'>내용</label>
+                                    <label className='mt-3' htmlFor="description" name='description'>내용</label>
                                     <textarea name="description" id="description" cols="30" rows="10" value={description} onChange={handleInput}></textarea>
                                     <Button className={styles.editBtn} type="submit">수정</Button>
                                 </Col>

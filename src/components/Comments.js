@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from '../scss/Comments.module.scss'
-import { $axios, setHeadersToken } from "../utils/axios";
+import { $axios } from "../utils/axios";
 import { Container, Row, Col, Card, Button, InputGroup, FormControl } from "react-bootstrap"
 import { useParams } from "react-router-dom";
 import moment from 'moment';
@@ -18,9 +18,17 @@ function Comments() {
     let params = useParams()
 
     const getComments = () => {
-        $axios.get(`/api/v1/comments/${params.id}`).then(res => {
+        $axios.get(`/api/v1/comments/${params.id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(res => {
             const {data} = res
             setComments(data)
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }).catch(err => {
             console.log(err);
         })
@@ -30,8 +38,13 @@ function Comments() {
         $axios.post(`api/v1/comments/${id}/reply`, {
             user_id: currentUser.id,
             comment: reply
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }).then(res => {
             const {data: {message}} = res
+            setReply('')
             getComments()
             toast.success(message)
         }).catch(err => {
@@ -43,6 +56,10 @@ function Comments() {
         $axios.post(`api/v1/comments/${params.id}`, {
             user_id: currentUser.id,
             comment: comment
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }).then(res => {
             const {data: {message}} = res
             setComment('')
@@ -69,7 +86,7 @@ function Comments() {
         input.hidden = !input.hidden
     }
     useEffect(() => {
-        setHeadersToken(token)
+        // setHeadersToken(token)
         getComments()
     }, [])
     return (

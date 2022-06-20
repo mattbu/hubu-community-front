@@ -1,7 +1,7 @@
 import styles from '../scss/Info.module.scss'
 import {Card, Button, Container, Row, Col, Form} from 'react-bootstrap'
 import { useEffect, useState } from 'react'
-import { $axios, setHeadersToken } from '../utils/axios'
+import { $axios } from '../utils/axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -50,7 +50,8 @@ function Info () {
         const form = getForm()
         const config = {
             headers: {
-                'Content_Type': 'multipart/form-data'
+                'Content_Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
             }
         }
         const updateUser = $axios.post(`${API_URL}/api/v1/user_information`, form, config)
@@ -63,13 +64,17 @@ function Info () {
             navigate('/')
             
         }).catch(err => {
-            console.log(err);
+            toast.error(err)
         })
         
     }
     useEffect(() => {
-        setHeadersToken(token)
-        const fetchUserInfo = $axios.get(`${API_URL}/api/v1/user_information`)
+        // setHeadersToken(token)
+        const fetchUserInfo = $axios.get(`${API_URL}/api/v1/user_information`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         fetchUserInfo.then(res => {
             const {data: {data}} = res
             setUserName(data.name)

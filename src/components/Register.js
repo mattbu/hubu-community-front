@@ -1,4 +1,4 @@
-import { $axios, setHeadersToken } from '../utils/axios'
+import { $axios } from '../utils/axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from '../scss/Register.module.scss'
@@ -8,6 +8,7 @@ import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap'
 function Register() {
     let navigate = useNavigate()
     const API_URL = process.env.REACT_APP_API_URL
+    const token = localStorage.getItem('token')
 
     const [userId, setUserId] = useState('')
     const [userName, setUserName] = useState('')
@@ -30,9 +31,13 @@ function Register() {
             default:
         }
     }
-    const getUserInfo = async () => {
+    const getUserInfo = async (token) => {
         try {
-            $axios.get(`${API_URL}/api/v1/user_information`).then(res => {
+            $axios.get(`${API_URL}/api/v1/user_information`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(res => {
                 const {data: {data}} = res
                 const parsedUserData = JSON.stringify(data)
                 localStorage.setItem('userData', parsedUserData)
@@ -53,9 +58,9 @@ function Register() {
         .then(res => {
             const { data: { token: { accessToken }, message}} = res
             localStorage.setItem('token', accessToken)
-            setHeadersToken(accessToken)
+            // setHeadersToken(accessToken)
             toast.success(message)
-            getUserInfo()
+            getUserInfo(accessToken)
         })
         .catch(err => {
             console.log(err);
@@ -95,9 +100,9 @@ function Register() {
                 const {data: {token}} = res
                 login(token)
             } else {
-                setUserId('')
-                setUserName('')
-                setPassword('')
+                // setUserId('')
+                // setUserName('')
+                // setPassword('')
             }
         })
         .catch(err => {

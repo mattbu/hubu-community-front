@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 import styles from '../scss/Write.module.scss'
 
 function Write() {
@@ -36,12 +37,15 @@ function Write() {
                 }
             }) //
         .then(res => {
-            alert('글쓰기 성공')
+            const { data: { message} } = res
             navigate('/')
 
         })
         .catch(err => {
-            alert('글쓰기 실패')
+            console.log(err);
+            const { response: { data: message}} = err
+            
+            toast.error(message.message)
         })
         }
     }
@@ -56,7 +60,7 @@ function Write() {
                                 <Col as="form" onSubmit={writeTask}>
                                     <label htmlFor="title">제목</label>
                                     <input id="title" name='title' type="text" value={title} onChange={handleInput} />
-                                    <label htmlFor="description" name='description'>내용</label>
+                                    <label className='mt-3' htmlFor="description" name='description'>내용</label>
                                     <textarea name="description" id="description" cols="30" rows="10" value={description} onChange={handleInput}></textarea>
                                     <Button className={styles.writeBtn} type="submit">저장</Button>
                                 </Col>
