@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import styles from '../scss/Boards.module.scss'
 import { $axios } from "../utils/axios"
 import moment from "moment"
-import { Button, Container, Row, Col, Card } from 'react-bootstrap'
+import { Button, Container, Row, Col, Card, Spinner } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
 function Boards() {
@@ -13,15 +13,18 @@ function Boards() {
     const token = localStorage.getItem('token')
     const currentUser = JSON.parse(localStorage.getItem('userData'))
 
+    const [isLoading, setIsLoading] = useState(false)
     const [lists, setLists] = useState([])
     const getList = async () => {
         try {
+            setIsLoading(true)
             const res = await $axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
             setLists(res.data)
+            setIsLoading(false)
         } catch (err) {
             console.log(err);
         }
@@ -50,7 +53,7 @@ function Boards() {
     }, [])
     return (
     <> 
-        <Container className={styles.boardContainer}>
+        { !isLoading ? <Container className={styles.boardContainer}>
             <Row>
                 <Col>
                     <div className={styles.titleSection}>
@@ -77,13 +80,13 @@ function Boards() {
                                             </Container>
                                             <Container className="px-0 mt-2">
                                                 <Row>
-                                                    <Col xs={1}>
+                                                    <Col xs={1} className="pe-0 text-center">
                                                         {
                                                             item.user.avatar_img ? <div className={styles.avatarPreview}><img src={item.user.avatar_img}/></div>
                                                             : <div className={`${styles.avatarDefault}`} />
                                                         }
                                                     </Col>
-                                                    <Col>
+                                                    <Col className="ps-0">
                                                         <h6 className={styles.userName}>{item.user.name}</h6>
                                                         <h6 className={styles.userEmail}>{item.user.email}</h6>
                                                     </Col>
@@ -99,7 +102,13 @@ function Boards() {
                     </ul>
                 </Col>
             </Row>
-        </Container>
+        </Container> : <Container className={styles.boardContainer}>
+                <Row>
+                    <Col className='text-center'>
+                        <Spinner animation="border" variant="primary" />
+                    </Col>
+                </Row>
+            </Container>}
     </>
     )
 }
