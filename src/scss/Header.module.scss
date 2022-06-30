@@ -31,7 +31,7 @@
     .avatarPreview {
         width: 30px;
         height: 30px;
-        background-color: red;
+        background-color: transparent;
         object-fit: contain;
         border-radius: 50%;
         img {
@@ -41,6 +41,13 @@
             border-radius: inherit;
             object-fit: cover;
         }
+    }
+    .avatarDefault {
+        width: 30px;
+        height: 30px;
+        background-color: #51557E;
+        object-fit: contain;
+        border-radius: 50%;
     }
     .dropdown {
         &Toggle {

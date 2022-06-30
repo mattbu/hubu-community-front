@@ -30,7 +30,7 @@
     .avatarPreview {
         width: 40px;
         height: 40px;
-        background-color: #143F6B;
+        background-color: transparent;
         object-fit: contain;
         border-radius: 50%;
         img {
@@ -40,6 +40,13 @@
             border-radius: inherit;
             object-fit: cover;
         }
+    }
+    .avatarDefault {
+        width: 40px;
+        height: 40px;
+        background-color: transparent;
+        object-fit: contain;
+        border-radius: 50%;
     }
     .date {
         font-size: 10px;

@@ -106,7 +106,7 @@ function Comments() {
                                                    <Container className="px-0 mt-2">
                                                         <Row>
                                                             <Col xs={2} md={1} className="pe-0">
-                                                                { comment.user?.avatar_img ? <div className={styles.avatarPreview}><img src={API_URL+comment.user?.avatar_img}/></div> : <div className={styles.avatarPreview} /> }
+                                                                { comment.user?.avatar_img ? <div className={styles.avatarPreview}><img src={comment.user?.avatar_img}/></div> : <div className={styles.avatarDefault} /> }
                                                             </Col>
                                                             <Col className="ps-0 ps-md-3 ps-lg-0">
                                                                 <h6 className={styles.userName}>{comment.user?.name}</h6>
@@ -131,7 +131,7 @@ function Comments() {
                                                                                     <Container className="px-0">
                                                                                         <Row>
                                                                                             <Col xs={2} md={1} className="pe-0">
-                                                                                                { reply.user?.avatar_img ? <div className={styles.avatarPreview}><img src={API_URL+reply.user?.avatar_img}/></div> : <div className={styles.avatarPreview} /> }
+                                                                                                { reply.user?.avatar_img ? <div className={styles.avatarPreview}><img src={reply.user?.avatar_img}/></div> : <div className={styles.avatarDefault} /> }
                                                                                             </Col>
                                                                                             <Col className="ps-0 ps-md-3 ps-lg-0">
                                                                                                 <h6 className={styles.userName}>{reply.user?.name}</h6>

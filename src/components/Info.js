@@ -95,9 +95,7 @@ function Info () {
                                 <Form.Group controlId="formFile" className={`${styles.avatarFileGroup} mb-3`}>
                                     <Form.Label>
                                     {
-                                        defaultImg ? <div className={styles.avatarPreview}><img src={
-                                            `${process.env.REACT_APP_API_URL}${defaultImg}`
-                                        }/></div>
+                                        defaultImg ? <div className={styles.avatarPreview}><img src={defaultImg}/></div>
                                         : newImg ? <div className={styles.avatarPreview}><img src={
                                             `${newImg}`
                                         }/></div> :

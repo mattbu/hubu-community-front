@@ -79,8 +79,8 @@ function Boards() {
                                                 <Row>
                                                     <Col xs={1}>
                                                         {
-                                                            item.user.avatar_img ? <div className={styles.avatarPreview}><img src={API_URL+item.user.avatar_img}/></div>
-                                                            : <div className={styles.avatarPreview} />
+                                                            item.user.avatar_img ? <div className={styles.avatarPreview}><img src={item.user.avatar_img}/></div>
+                                                            : <div className={`${styles.avatarDefault}`} />
                                                         }
                                                     </Col>
                                                     <Col>

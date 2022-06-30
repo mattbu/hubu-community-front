@@ -48,8 +48,8 @@ function Detail() {
                         <Container className="px-0 mt-2">
                             <Row>
                                 <Col xs={2} md={1} className="pe-0">
-                                    { detail.user?.avatar_img ? <div className={styles.avatarPreview}><img src={API_URL+detail.user?.avatar_img}/></div> 
-                                    : <div className={styles.avatarPreview} />
+                                    { detail.user?.avatar_img ? <div className={styles.avatarPreview}><img src={detail.user?.avatar_img}/></div> 
+                                    : <div className={styles.avatarDefault} />
                                     }
                                 </Col>
                                 <Col className="ps-0">

@@ -50,8 +50,8 @@ function Header() {
                         { token ? 
                         <Dropdown className={styles.dropdown}>
                             <Dropdown.Toggle className={styles.dropdownToggle}>
-                                { userInfo.avatar_img ? <div className={styles.avatarPreview}><img src={API_URL+userInfo.avatar_img}/></div>
-                                :  <div className={styles.avatarPreview}/ >
+                                { userInfo.avatar_img ? <div className={styles.avatarPreview}><img src={userInfo.avatar_img}/></div>
+                                :  <div className={styles.avatarDefault}/ >
                                 }
                                 <span>{userInfo.name}님 안녕하세요</span>
                             </Dropdown.Toggle>
