@@ -65,8 +65,9 @@ function Login() {
     return (
         <Container className={styles.loginContainer}>
             <Row>
-                <Col>
+                <Col xs={12} md={4}>
                     <h1>로그인</h1>
+                    <p>로그인을 하세요. 🔒</p>
                     <div className={styles.formContainer}>
                         <form onSubmit={login} className={styles.loginForm}>
                             <label htmlFor="id-input">아이디</label>
@@ -75,8 +76,8 @@ function Login() {
                             <input name="password" id="password-input" type="password" placeholder="비밀번호" value={password} onChange={inputChange}/>
                             <Button type="submit" className={styles.loginBtn}>로그인</Button>
                         </form>
+                        <Link to="/register" className={styles.loginLink}>아이디가 없으신가요?</Link>
                     </div>
-                    <Link to="/register" className={styles.loginLink}>아이디가 없으신가요?</Link>
                 </Col>
             </Row>
         </Container>

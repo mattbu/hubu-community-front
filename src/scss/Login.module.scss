@@ -1,15 +1,22 @@
 .loginContainer {
     margin-top: 60px;
     .formContainer {
+        margin-top: 24px;
         background-color: white;
-        padding: 24px;
+        padding: 24px 40px;
+        border-radius: 12px;
+        box-shadow: 10px 5px 20px 5px rgba(0,0,0,0.01);
     }
     .loginForm {
         all: unset!important;
+        input {
+            width: 100%;
+        }
     }
     .loginBtn {
+        width: 100%;
         padding: 0.5rem 2rem;
-        margin-top: 16px;
+        margin-top: 32px;
         background-color: #51557E;
         border: none;
         &:hover {
@@ -23,5 +30,6 @@
     .loginLink {
         margin-top: 16px;
         color: #51557E;
+        display: flex;
     }
 }
