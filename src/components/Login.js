@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import styles from '../scss/Login.module.scss'
 import { setToken } from "../store"
-import { Button } from "react-bootstrap"
+import { Container, Row, Col, Button } from "react-bootstrap"
 import { toast } from "react-toastify"
 
 function Login() {
@@ -63,17 +63,23 @@ function Login() {
     }
     useEffect(() => {}, [])
     return (
-        <div className={styles.loginContainer}>
-            <h1>로그인</h1>
-            <form onSubmit={login}>
-                <label htmlFor="id-input">아이디</label>
-                <input name="id" id="id-input" type="text" placeholder="아이디" value={userId} onChange={inputChange}/>
-                <label htmlFor="password-input" className={'mt-3'}>비밀번호</label>
-                <input name="password" id="password-input" type="password" placeholder="비밀번호" value={password} onChange={inputChange}/>
-                <Button type="submit" className={styles.loginBtn}>로그인</Button>
-            </form>
-            <Link to="/register" className={styles.loginLink}>아이디가 없으신가요?</Link>
-        </div>
+        <Container className={styles.loginContainer}>
+            <Row>
+                <Col>
+                    <h1>로그인</h1>
+                    <div className={styles.formContainer}>
+                        <form onSubmit={login} className={styles.loginForm}>
+                            <label htmlFor="id-input">아이디</label>
+                            <input name="id" id="id-input" type="text" placeholder="아이디" value={userId} onChange={inputChange}/>
+                            <label htmlFor="password-input" className={'mt-3'}>비밀번호</label>
+                            <input name="password" id="password-input" type="password" placeholder="비밀번호" value={password} onChange={inputChange}/>
+                            <Button type="submit" className={styles.loginBtn}>로그인</Button>
+                        </form>
+                    </div>
+                    <Link to="/register" className={styles.loginLink}>아이디가 없으신가요?</Link>
+                </Col>
+            </Row>
+        </Container>
     )
 }
 

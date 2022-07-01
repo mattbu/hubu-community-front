@@ -1,10 +1,24 @@
 .loginContainer {
-    padding: 60px;
+    margin-top: 60px;
+    .formContainer {
+        background-color: white;
+        padding: 24px;
+    }
+    .loginForm {
+        all: unset!important;
+    }
     .loginBtn {
         padding: 0.5rem 2rem;
         margin-top: 16px;
         background-color: #51557E;
         border: none;
+        &:hover {
+            background-color: #51557E;
+        }
+        &:focus {
+            box-shadow: none!important;
+            background-color: #51557E;
+        }
     }
     .loginLink {
         margin-top: 16px;
