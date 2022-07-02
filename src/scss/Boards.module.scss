@@ -14,6 +14,10 @@
             &:hover {
                 background-color: #51557E;
             }
+            &:focus {
+                box-shadow: none!important;
+                background-color: #51557E;
+            }
         }
     }
     .listInit {

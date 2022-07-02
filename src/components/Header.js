@@ -41,19 +41,19 @@ function Header() {
         <>
             <Navbar bg="light" sticky="top" expand="lg" className={styles.headerContainer}>
                 <Container fluid>
-                    <Row className="justify-content-between w-100">
+                    <Row className="justify-content-between">
                         <Col xs={4} className="d-inline-flex">
                             <Button className={styles.backBtn} onClick={() => navigate(-1)}><FiArrowLeft/></Button>
                             <Link to="/" className={styles.navBrand}>HUBU</Link>
                         </Col>
-                        <Col xs={6} sm={4} className="text-right">
+                        {/* <Col xs={6} sm={4} className="text-right">
                         { token ? 
                         <Dropdown className={styles.dropdown}>
                             <Dropdown.Toggle className={styles.dropdownToggle}>
                                 { userInfo.avatar_img ? <div className={styles.avatarPreview}><img src={userInfo.avatar_img}/></div>
                                 :  <div className={styles.avatarDefault}/ >
                                 }
-                                <span>{userInfo.name}님 안녕하세요</span>
+                                <span>{userInfo.name}님 안녕하세요!</span>
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu className={styles.dropdownMenu}>
@@ -62,10 +62,9 @@ function Header() {
                                 <Button className={styles.logoutBtn} onClick={logout}>로그아웃</Button>
                                 </Container>
                             </Dropdown.Menu>
-                        </Dropdown>
-                        : null
-                    }
-                        </Col>
+                       </Dropdown> : null
+                        }
+                        </Col> */}
                     </Row>
                 </Container>
             </Navbar>
