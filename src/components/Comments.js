@@ -5,6 +5,9 @@ import { Container, Row, Col, Card, Button, InputGroup, FormControl } from "reac
 import { useParams } from "react-router-dom";
 import moment from 'moment';
 import { toast } from 'react-toastify'
+import { CornerDownRight } from 'react-feather';
+
+import CommentCard from "./ui/CommentCard";
 
 function Comments() {
     const API_URL = process.env.REACT_APP_API_URL
@@ -90,95 +93,72 @@ function Comments() {
         getComments()
     }, [])
     return (
-        <>
-            <Container>
-                <Row>
-                    <Col xs={12}>
-                    <Card className={styles.commentContainer}>
-                        <Container>
-                            <Row>
-                                <Col>
-                                    <h6 className={styles.commentTitle}>댓글</h6>
+        <Container>
+            <Row>
+                <Col xs={12} className={styles.commentContainer}>
+                    <hr />
+                    <h6 className={styles.commentTitle}>댓글</h6>
+                    <div className={styles.commentFormContainer}>
+                        <form className={styles.commentForm} onSubmit={postComment}>
+                            <InputGroup>
+                                <FormControl name="comment" placeholder="댓글을 남겨보세요." type="text" value={comment} onChange={inputChange}/>
+                                <Button className={styles.enrollBtn} type="submit">등록</Button>
+                            </InputGroup>
+                        </form>
+                    </div>
+                    {
+                        comments.map(comment => {
+                            return (
+                                <Container key={comment.id} className={styles.commentCard}>
+                                <Row>
+                                    <Col className={styles.userInfoColumn}>
+                                        { comment.user?.avatar_img ? <div className={styles.avatarPreview}><img src={comment.user?.avatar_img}/></div> : <div className={styles.avatarDefault} /> }
+                                        <span className={styles.userInfo}>
+                                            <span className={styles.userName}>{comment.user?.name}</span>
+                                            <span> | </span>
+                                            <span className={styles.userEmail}>{comment.user?.email}</span>
+                                            <p className={styles.commentDate}>{moment(comment.created_at).format('YYYY-MM-DD hh:mm')}</p>
+                                        </span>
+                                    </Col>
+                                </Row>
+                                <Row className="mt-2">
+                                    <Col>
+                                        {comment.comment}
+                                    </Col>
+                                    <Col xs={3} md={4} className="text-right ps-0">
+                                        <Button className={styles.replyBtn} onClick={() => openReplyInput(comment.id)} type="button">답글쓰기</Button>
+                                    </Col>
                                     {
-                                        comments.map(comment => {
-                                            return (
-                                                <Card key={comment.id} className={styles.commentCard}>
-                                                   <Container className="px-0 mt-2">
-                                                        <Row>
-                                                            <Col xs={2} md={1} className="pe-0">
-                                                                { comment.user?.avatar_img ? <div className={styles.avatarPreview}><img src={comment.user?.avatar_img}/></div> : <div className={styles.avatarDefault} /> }
-                                                            </Col>
-                                                            <Col className="ps-0 ps-md-3 ps-lg-0">
-                                                                <h6 className={styles.userName}>{comment.user?.name}</h6>
-                                                                <h6 className={styles.date}>{moment(comment.created_at).format('YYYY-MM-DD hh:mm')}</h6>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row className="mt-3">
-                                                            <Col>
-                                                                {comment.comment}
-                                                            </Col>
-                                                            <Col xs={2} md={4} className="text-right ps-0">
-                                                                <Button className={styles.replyBtn} onClick={() => openReplyInput(comment.id)} type="button">답글쓰기</Button>
-                                                            </Col>
-                                                            {
-                                                                comment.replies.length > 0 ?
-                                                                <Col xs={12} className="mt-3">
-                                                                    <h6 className={`${styles.commentTitle} mb-3`}>답글</h6>
-                                                                    {
-                                                                        comment.replies.map(reply => {
-                                                                            return (
-                                                                                <Card key={`reply-${reply.id}`} className={styles.replyCard}>
-                                                                                    <Container className="px-0">
-                                                                                        <Row>
-                                                                                            <Col xs={2} md={1} className="pe-0">
-                                                                                                { reply.user?.avatar_img ? <div className={styles.avatarPreview}><img src={reply.user?.avatar_img}/></div> : <div className={styles.avatarDefault} /> }
-                                                                                            </Col>
-                                                                                            <Col className="ps-0 ps-md-3 ps-lg-0">
-                                                                                                <h6 className={styles.userName}>{reply.user?.name}</h6>
-                                                                                                <h6 className={styles.date}>{moment(reply.created_at).format('YYYY-MM-DD hh:mm')}</h6>
-                                                                                            </Col>
-                                                                                            <Col xs={12} className="mt-2">
-                                                                                                {reply.comment}
-                                                                                            </Col>
-                                                                                        </Row>
-                                                                                    </Container>
-                                                                                </Card>
-                                                                            )
-                                                                        })
-                                                                    }
-                                                                </Col>
-                                                                : null
-                                                            }
-                                                        </Row>
-                                                        <Row className="mt-2" id={`reply-${comment.id}`} hidden as="form" onSubmit={(e) => replyComment(e, comment.id)}>
-                                                            <Col>
-                                                                <InputGroup>
-                                                                    <FormControl name="reply" placeholder="답글을 남겨보세요." type="text" value={reply} onChange={inputChange}/>
-                                                                    <Button className={styles.enrollBtn} type="submit">등록</Button>
-                                                                </InputGroup>
-                                                            </Col>
-                                                        </Row>
-                                                    </Container>
-                                                </Card>
-                                            )
-                                        })
+                                        comment.replies.length > 0 ?
+                                        <Col xs={12} className="mt-3">
+                                            <h6 className={`${styles.commentTitle} mb-3`}>답글</h6>
+                                            {
+                                                comment.replies.map(reply => {
+                                                    return (
+                                                        <CommentCard key={`reply-${reply.id}`} reply={reply} />
+                                                    )
+                                                })
+                                            }
+                                        </Col>
+                                        : null
                                     }
-                                </Col>
-                            </Row>
-                            <Row className="mt-3">
-                                <Col as="form" onSubmit={postComment}>
-                                    <InputGroup>
-                                        <FormControl name="comment" placeholder="댓글을 남겨보세요." type="text" value={comment} onChange={inputChange}/>
+                                </Row>
+                                <div id={`reply-${comment.id}`} className={styles.commentFormContainer} hidden>
+                                    <form className={styles.commentForm} onSubmit={(e) => replyComment(e, comment.id)}>
+                                        <label htmlFor="reply-input">
+                                            <CornerDownRight color="#51557E" size={20} />
+                                        </label>
+                                        <input id="reply-input" className={styles.replyInput} name="reply" type="text" placeholder="답글을 남겨보세요." value={reply} onChange={inputChange} />
                                         <Button className={styles.enrollBtn} type="submit">등록</Button>
-                                    </InputGroup>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </Card>
-                    </Col>
-                </Row>
-            </Container>
-        </>
+                                    </form>
+                                </div>
+                            </Container>
+                            )
+                        })
+                    }
+                </Col>
+            </Row>
+        </Container>
     )
 }
 

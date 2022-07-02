@@ -5,52 +5,101 @@
         font-family: 'NEXONFootballGothicBA1';
         color: #51557E;
     }
+    .commentFormContainer {
+        background-color: white;
+        border-radius: 12px;
+        padding: 4 0px;
+        margin-bottom: 16px;
+        .commentForm {
+            all: unset;
+            width: 100%;
+            max-width: 100%;
+            input {
+                display: inline-flex;
+                max-width: 100%;
+            }
+            .replyInput {
+                display: inline-flex;
+                margin-left: 12px;
+                width: 93%;
+                max-width: 100%;
+                @media screen and (max-width: 1400px) {
+                    width: 86%;
+                }
+                @media screen and (max-width: 768px) {
+                    width: 80%;
+                }
+                @media screen and (max-width: 576px) {
+                    width: 73%;
+                }
+            }
+            .enrollBtn {
+                background-color: #51557E;
+                color: white;
+                vertical-align: baseline;
+                margin-left: 4px;
+                &:hover {
+                    background-color: #51557E;
+                    color: white;
+                }
+                &:focus {
+                    background-color: #51557E;
+                    color: white;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
     .commentCard {
         margin-bottom: 8px;
         border: none;
-        background-color: rgb(241, 241, 241);
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 10px 5px 20px 5px rgba(0,0,0,0.01);
         padding: 12px 12px 12px 20px;
-    }
-    .enrollBtn {
-        background-color: #51557E;
-        color: white;
-        &:hover {
-            background-color: #51557E;
-            color: white;
+        .userInfoColumn {
+            display: flex;
+            .avatarPreview {
+                display: inline-flex;
+                width: 40px;
+                height: 40px;
+                background-color: transparent;
+                object-fit: contain;
+                border-radius: 50%;
+                margin-right: 12px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    max-height: auto;
+                    border-radius: inherit;
+                    object-fit: cover;
+                }
+            }
+            .avatarDefault {
+                display: inline-flex;
+                width: 40px;
+                height: 40px;
+                background-color: transparent;
+                object-fit: contain;
+                border-radius: 50%;
+                margin-right: 12px;
+            }
+            .userInfo {
+                align-self: center;
+                color: #51557E;
+                font-size: 12px;
+                .userEmail {
+                    color: #a2a5cd;
+                    font-size: 12px;
+                }
+                .commentDate {
+                    color: #a5a5a5;
+                    // font-size: 12px;
+                    margin: 0;
+                    font-size: 10px;
+                }
+            }
         }
-        &:focus {
-            background-color: #51557E;
-            color: white;
-            box-shadow: none;
-        }
-        &:active {
-            box-shadow: none!important;
-        }
-    }
-    .avatarPreview {
-        width: 40px;
-        height: 40px;
-        background-color: transparent;
-        object-fit: contain;
-        border-radius: 50%;
-        img {
-            width: 100%;
-            height: 100%;
-            max-height: auto;
-            border-radius: inherit;
-            object-fit: cover;
-        }
-    }
-    .avatarDefault {
-        width: 40px;
-        height: 40px;
-        background-color: transparent;
-        object-fit: contain;
-        border-radius: 50%;
-    }
-    .date {
-        font-size: 10px;
-        color: #A5A5A5;
     }
     .replyBtn {
         background-color: transparent;
@@ -70,6 +119,8 @@
         }
     }
     .replyCard {
+        background-color: rgb(248, 249, 250);
+        border-radius: 12px;
         margin-bottom: 8px;
         border: none;
         padding: 16px 12px 12px 20px;
