@@ -6,15 +6,15 @@ import { Button, Container, Row, Col  } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
-
 import BoardCard from "./ui/BoardCard"
 import LoadingSpinner from "./ui/LoadingSpinner"
+import { useSelector } from "react-redux"
 
 function Boards() {
     let navigate = useNavigate()
+    const { token } = useSelector(state => state)
     
     const API_URL = process.env.REACT_APP_API_URL
-    const token = localStorage.getItem('token')
 
     const [isLoading, setIsLoading] = useState(false)
     const [lists, setLists] = useState([])

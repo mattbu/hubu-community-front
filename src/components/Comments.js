@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import styles from '../scss/Comments.module.scss'
 import { $axios } from "../utils/axios";
-import { Container, Row, Col, Card, Button, InputGroup, FormControl } from "react-bootstrap"
+import { Container, Row, Col, Button } from "react-bootstrap"
 import { useParams } from "react-router-dom";
 import moment from 'moment';
 import { toast } from 'react-toastify'
 import { CornerDownRight } from 'react-feather';
 
 import CommentCard from "./ui/CommentCard";
+import { useSelector } from "react-redux";
 
 function Comments() {
     const API_URL = process.env.REACT_APP_API_URL
-    const token = localStorage.getItem('token')
-    const currentUser = JSON.parse(localStorage.getItem('userData'))
+    const { token, user } = useSelector(state => state)
+    const currentUser = user
 
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');

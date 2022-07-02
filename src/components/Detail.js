@@ -6,20 +6,21 @@ import moment from 'moment';
 import { Button, Container, Row, Col } from 'react-bootstrap'
 import Comments from './Comments';
 import LoadingSpinner from './ui/LoadingSpinner';
+import { useSelector } from 'react-redux';
 
 function Detail() {
+    const { token, user } = useSelector(state => state) 
     const API_URL = process.env.REACT_APP_API_URL
     let params = useParams();
     let navigate = useNavigate();
 
-    const token = localStorage.getItem('token')
-    const currentUser = JSON.parse(localStorage.getItem('userData'))
+    const currentUser = user
 
     const [isLoading, setIsLoading] = useState(false)
     const [detail, setDetail] = useState({})
     const getDetail = async () => {
         setIsLoading(true)
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards/${params.id}`, {
+        const res = await axios.get(`${API_URL}/api/v1/boards/${params.id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

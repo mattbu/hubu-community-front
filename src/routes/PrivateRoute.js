@@ -1,9 +1,10 @@
 import React from "react"
+import { useSelector } from "react-redux"
 import { Navigate, useLocation } from "react-router-dom"
 import { toast } from 'react-toastify'
 const PrivateRoute = ({component}) => {
-    const token = localStorage.getItem('token')
-    const {pathname} = useLocation()
+    const { token } = useSelector(state => state)
+    const { pathname } = useLocation()
     if (token) {
         return component
     } else {
@@ -12,13 +13,6 @@ const PrivateRoute = ({component}) => {
         }
         return <Navigate to="/login"></Navigate>
     }
-    
-    // else if (!token && pathname !== '/') {
-    //     toast.error('접근 권한이 없습니다. 로그인을 해주세요.')
-    //     return <Navigate to="/login"></Navigate>
-    // } else if (!token && pathname === '/' ) {
-    //     return <Navigate to="/login"></Navigate>
-    // }
 }
 
 export default PrivateRoute

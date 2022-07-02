@@ -1,5 +1,5 @@
 import styles from '../scss/Info.module.scss'
-import {Card, Button, Container, Row, Col, Form} from 'react-bootstrap'
+import { Button, Container, Row, Col, Form } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import { $axios } from '../utils/axios'
 import { useNavigate } from 'react-router-dom'
@@ -80,46 +80,44 @@ function Info () {
             setUserName(data.name)
             setUserEmail(data.email)
             setDefaultImg(data.avatar_img)
-            console.log(data.avatar_img);
         })
     }, [])
     return (
-        <>
-         <Container className={styles.infoContainer}>
-            <Row>
-                <Col>
+        <Container className={styles.infoContainer}>
+            <Row className={styles.infoRow}>
+                <Col xs={12} sm={12} md={8} lg={6} xl={4} className={styles.formContainer}>
                     <h1>마이페이지</h1>
-                    <Container className="px-2">
-                        <Row>
-                            <Col as="form" onSubmit={editInfo} className={styles.infoContainerForm}>
-                                <Form.Group controlId="formFile" className={`${styles.avatarFileGroup} mb-3`}>
-                                    <Form.Label>
-                                    {
-                                        defaultImg ? <div className={styles.avatarPreview}><img src={defaultImg}/></div>
-                                        : newImg ? <div className={styles.avatarPreview}><img src={
-                                            `${newImg}`
-                                        }/></div> :
-                                        <div className={styles.avatarPreview}/> 
-                                    }
-                                    </Form.Label>
-                                    <Form.Control type="file" className={styles.avatarInput} onChange={uploadAvatar} />
-                                </Form.Group>
-                                <div>
-                                    <label htmlFor="name-input">이름</label>
-                                    <input name="name" id="name-input" type="text" placeholder="이름" value={userName} onChange={inputChange}/>
-                                    <label htmlFor="email-input" className={'mt-3'}>이메일</label>
-                                    <input id="email-input" type="text" placeholder="이메일" value={userEmail} readOnly/>
-                                    <label htmlFor="new-password-input" className={'mt-3'}>새로운 비밀번호</label>
-                                    <input name="new-password" id="new-password-input" type="password" placeholder="이름" value={newPassword} onChange={inputChange}/>
-                                    <Button className={styles.editBtn} type="submit">정보 수정</Button>
-                                </div>
-                            </Col>
-                        </Row>
-                    </Container>
+                    <p>회원가입을 진행해 주세요. 👤</p>
+                    <form onSubmit={editInfo} className={styles.infoContainerForm}>
+                        <Form.Group controlId="formFile" className={`${styles.avatarFileGroup} mb-3`}>
+                            <Form.Label>
+                                <p className='mb-2'>대표 이미지</p>
+                                {
+                                    defaultImg ? <div className={styles.avatarPreview}><img src={defaultImg}/></div>
+                                    : newImg ? <div className={styles.avatarPreview}><img src={
+                                        `${newImg}`
+                                    }/></div> :
+                                    <div className={styles.avatarPreview}/> 
+                                }
+                            </Form.Label>
+                            <Form.Control type="file" className={styles.avatarInput} onChange={uploadAvatar} />
+                        </Form.Group>
+                        <div>
+                            <div>
+                                <label htmlFor="email-input">이메일</label>
+                                <input id="email-input" type="text" placeholder="이메일" value={userEmail} disabled/>
+                                <small>이메일은 변경이 불가합니다.</small>
+                            </div>
+                            <label htmlFor="name-input" className={'mt-3'}>이름</label>
+                            <input name="name" id="name-input" type="text" placeholder="이름" value={userName} onChange={inputChange}/>
+                            <label htmlFor="new-password-input" className={'mt-3'}>새로운 비밀번호</label>
+                            <input name="new-password" id="new-password-input" type="password" placeholder="이름" value={newPassword} onChange={inputChange}/>
+                            <Button className={styles.editBtn} type="submit">정보 수정</Button>
+                        </div>
+                    </form>
                 </Col>
             </Row>
          </Container>
-        </>
     )
 }
 

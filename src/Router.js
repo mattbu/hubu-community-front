@@ -8,8 +8,9 @@ import Edit from "./components/Edit"
 import Info from './components/Info'
 import NotFound from "./components/NotFound"
 import PrivateRoute from "./routes/PrivateRoute"
+import { useSelector } from "react-redux"
 function Router() {
-    const token = localStorage.getItem('token')
+    const { token } = useSelector(state => state)
     return (
         <div className="main-container">
             <Routes>

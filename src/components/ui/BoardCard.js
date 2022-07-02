@@ -3,11 +3,13 @@ import { Button, Container, Row, Col, Card } from 'react-bootstrap'
 import styles from '../../scss/Boards.module.scss'
 import moment from "moment"
 import { Trash2 } from 'react-feather';
+import { useSelector } from "react-redux";
 
 
 function BoardCard({ post, getList, deletePost }) {
     let navigate = useNavigate()
-    const currentUser = JSON.parse(localStorage.getItem('userData'))
+    const { user } = useSelector(state => state)
+    const currentUser = user
     return (
         <Container className={styles.card}>
             <Row>

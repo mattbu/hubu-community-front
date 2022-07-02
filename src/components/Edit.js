@@ -6,6 +6,7 @@ import { Button, Container, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { useSelector } from 'react-redux';
 
 function Edit() {
     let navigate = useNavigate();
@@ -15,7 +16,7 @@ function Edit() {
     const [title, setTitle] = useState(task.title)
     const [description, setDescription] = useState(task.description)
 
-    const token = localStorage.getItem('token')
+    const { token } = useSelector(state => state)
 
     const handleInput = (e) => {
         const {target: {name, value}} = e

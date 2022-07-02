@@ -6,11 +6,14 @@ import { Button, Container, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { useSelector } from 'react-redux';
 
 function Write() {
+    const API_URL = process.env.REACT_APP_API_URL
     let navigate = useNavigate();
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const { token } = useSelector(state => state)
 
     const handleInput = (e) => {
         const {target: {name, value}} = e
@@ -30,7 +33,6 @@ function Write() {
             title: title,
             description: description
         }
-        const token = localStorage.getItem('token')
         confirmAlert({
             title: '게시물 등록',
             message: '글을 작성 하시겠어요?',
@@ -38,7 +40,7 @@ function Write() {
               {
                 label: '확인',
                 onClick: () => {
-                    axios.post(`${process.env.REACT_APP_API_URL}/api/v1/boards`, form, {
+                    axios.post(`${API_URL}/api/v1/boards`, form, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }

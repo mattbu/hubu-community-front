@@ -6,26 +6,26 @@ import { useEffect, useState } from "react";
 import { toast } from 'react-toastify'
 import { $axios, setHeadersToken } from '../utils/axios'
 import UserDropdown from "./ui/UserDropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "../slices/tokenSlice";
+import { setUserInfo } from "../slices/userSlice";
 
 function Header() {
     let navigate = useNavigate()
 
     const API_URL = process.env.REACT_APP_API_URL
-    const token = localStorage.getItem('token')
-    const userInfo = JSON.parse(localStorage.getItem('userData'))
+    const { token, user } = useSelector(state => state)
+    const userInfo = user
+
+    const dispatch = useDispatch()
 
     const [show, setShow] = useState(false)
 
     const logout = () => {
-        navigate('/')
         toast.success('로그아웃 되었습니다.')
-        localStorage.removeItem('token')
-        localStorage.removeItem('userData')
-        localStorage.removeItem('isLogin')
-        // setTimeout(() => {
-        //     toast.success('로그아웃 되었습니다.')
-        //     navigate('/')
-        // }, 0)
+        dispatch(setToken(null))
+        dispatch(setUserInfo({}))
+        navigate('/')
     }
     useEffect(() => {
         // setHeadersToken(token)

@@ -1,26 +1,33 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit'
-import { persistReducer } from 'redux-persist'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import storage from 'redux-persist/lib/storage'
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
+
+import user from './slices/userSlice'
+import token from './slices/tokenSlice'
+import persistStore from "redux-persist/es/persistStore";
 
 const persistConfig = {
-  key: "root",
+  key: "store",
   storage,
 };
 
-const token = createSlice({
-    name: 'token',
-    initialState: '',
-    reducers: {
-        setToken(state, action) {
-            return action.payload
-        }
+const rootReducer = combineReducers({
+  user,
+  token
+})
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => 
+  getDefaultMiddleware({
+    serializableCheck: {
+      ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     }
+  })
 })
 
-export const {setToken} = token.actions
+export const persistor = persistStore(store)
 
-export default configureStore({
-  reducer: {
-    token: token.reducer
-  }
-})
+export default store

@@ -3,16 +3,18 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import styles from '../scss/Login.module.scss'
-import { setToken } from "../store"
 import { Container, Row, Col, Button } from "react-bootstrap"
 import { toast } from "react-toastify"
+import { setUserInfo } from '../slices/userSlice'
+import { setToken } from '../slices/tokenSlice'
 
 function Login() {
-    const state = useSelector(state => state)
+    const { user, token } = useSelector(state => state)
     const dispatch = useDispatch()
     const API_URL = process.env.REACT_APP_API_URL
 
     let navigate = useNavigate()
+
     const [userId, setUserId] = useState('')
     const [password, setPassword] = useState('')
     const inputChange = (e) => {
@@ -50,13 +52,14 @@ function Login() {
         try {
             const res = await $axios.post(`${API_URL}/api/v1/auth/login`, loginForm)
             const { data: { token: { accessToken }, user, message}} = res
-            localStorage.setItem('token', accessToken)
-            localStorage.setItem('isLogin', true)
-            localStorage.setItem('userData', JSON.stringify(user))
+            dispatch(setUserInfo(user))
+            dispatch(setToken(accessToken))
             // setHeadersToken(accessToken)
             // getUserInfo()
             toast.success(message)
+            console.log('도랏나');
             navigate('/')
+            console.log('도랏나22');
         } catch (err) {
             console.log(err);
         }
