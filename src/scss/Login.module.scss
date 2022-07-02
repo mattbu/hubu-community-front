@@ -1,9 +1,13 @@
 .loginContainer {
-    margin-top: 60px;
+    .loginRow {
+        padding: 0 1rem;
+        justify-content: center;
+        min-height: 90vh;
+    }
     .formContainer {
-        margin-top: 24px;
+        align-self: center;
         background-color: white;
-        padding: 24px 40px;
+        padding: 40px;
         border-radius: 12px;
         box-shadow: 10px 5px 20px 5px rgba(0,0,0,0.01);
     }

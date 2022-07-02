@@ -64,20 +64,18 @@ function Login() {
     useEffect(() => {}, [])
     return (
         <Container className={styles.loginContainer}>
-            <Row>
-                <Col xs={12} md={4}>
+            <Row className={styles.loginRow}>
+                <Col xs={12} sm={12} md={8} lg={6} xl={4} className={styles.formContainer}>
                     <h1>로그인</h1>
                     <p>로그인을 하세요. 🔒</p>
-                    <div className={styles.formContainer}>
-                        <form onSubmit={login} className={styles.loginForm}>
-                            <label htmlFor="id-input">아이디</label>
-                            <input name="id" id="id-input" type="text" placeholder="아이디" value={userId} onChange={inputChange}/>
-                            <label htmlFor="password-input" className={'mt-3'}>비밀번호</label>
-                            <input name="password" id="password-input" type="password" placeholder="비밀번호" value={password} onChange={inputChange}/>
-                            <Button type="submit" className={styles.loginBtn}>로그인</Button>
-                        </form>
+                    <form onSubmit={login} className={styles.loginForm}>
+                        <label htmlFor="id-input">아이디</label>
+                        <input name="id" id="id-input" type="text" placeholder="아이디" value={userId} onChange={inputChange}/>
+                        <label htmlFor="password-input" className={'mt-3'}>비밀번호</label>
+                        <input name="password" id="password-input" type="password" placeholder="비밀번호" value={password} onChange={inputChange}/>
                         <Link to="/register" className={styles.loginLink}>아이디가 없으신가요?</Link>
-                    </div>
+                        <Button type="submit" className={styles.loginBtn}>로그인</Button>
+                    </form>
                 </Col>
             </Row>
         </Container>

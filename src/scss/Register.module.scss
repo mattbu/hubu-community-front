@@ -1,11 +1,28 @@
 .registerContainer {
-    margin-top: 60px;
+    .registerRow {
+        padding: 0 1rem;
+        justify-content: center;
+        min-height: 100vh;
+    }
+    .formContainer {
+        align-self: center;
+        background-color: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 10px 5px 20px 5px rgba(0,0,0,0.01);
+    }
+    .registerForm {
+        all: unset!important;
+        input {
+            width: 100%;
+        }
+    }
     .avatarFileGroup {
         display: inline-flex;
         align-items: center;
         .avatarPreview {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background: no-repeat center url('../asset/images/avatar-1577909_960_720.png');
             background-size: contain;
             border-radius: 50%;
@@ -19,9 +36,9 @@
             }
         }
         .avatarInput {
-            width: 85px;
+            width: 90px;
             display: inline;
-            margin-left: 16px;
+            margin: 20px 0 0 16px;
             background-color: #51557E;
             &:after {
                 background-color: red;
@@ -29,9 +46,17 @@
         }
     }
     .registerBtn {
+        width: 100%;
         padding: 0.5rem 2rem;
-        margin-top: 16px;
+        margin-top: 32px;
         background-color: #51557E;
         border: none;
+        &:hover {
+            background-color: #51557E;
+        }
+        &:focus {
+            box-shadow: none!important;
+            background-color: #51557E;
+        }
     }
 }

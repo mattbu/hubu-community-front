@@ -11,7 +11,7 @@ import PrivateRoute from "./routes/PrivateRoute"
 function Router() {
     const token = localStorage.getItem('token')
     return (
-        <>
+        <div className="main-container">
             <Routes>
                 <Route
                     path="/"
@@ -39,7 +39,7 @@ function Router() {
                 <Route path="/register" element={<Register />}></Route>
                 <Route path="*" element={<NotFound />}></Route>
             </Routes>
-        </>
+        </div>
     )
 }
 
