@@ -29,25 +29,39 @@
             button {
                 background-color: transparent;
                 color: #51557E;
-                &:focus{
+                &:hover{
                     background-color: white;
                     color: #51557E; 
+                }
+                &:focus{
+                    background-color: transparent;
+                    color: transparent; 
                     box-shadow: none!important;
                 }
-            }
-            a {
-                text-decoration: none;
-                color: #51557E;
+                a {
+                    text-decoration: none;
+                    color: #51557E;
+                    background-color: transparent;
+                }
             }
           }
           &Item {
             button {
                 background-color: transparent;
                 color: transparent;
-            }
-            a {
-                text-decoration: none;
-                color: transparent;
+                &:hover {
+                    background-color: transparent;
+                    color: transparent;
+                }
+                &:focus,&:active{
+                    background-color: transparent!important;
+                    color: transparent!important;
+                    box-shadow: none!important;
+                }
+                a {
+                    text-decoration: none;
+                    color: transparent;
+                }
             }
           }
     }

@@ -1,14 +1,14 @@
 import { useNavigate, Link } from "react-router-dom"
-import styles from '../scss/Header.module.scss'
+import styles from '../../scss/Header.module.scss'
 import { Button, Navbar, Container, Row, Col, NavDropdown, Nav, Dropdown } from 'react-bootstrap';
 import { ArrowLeft } from 'react-feather';
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify'
-import { $axios, setHeadersToken } from '../utils/axios'
-import UserDropdown from "./ui/UserDropdown";
+import { $axios, setHeadersToken } from '../../utils/axios'
+import UserDropdown from "../ui/UserDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../slices/tokenSlice";
-import { setUserInfo } from "../slices/userSlice";
+import { setToken } from "../../slices/tokenSlice";
+import { setUserInfo } from "../../slices/userSlice";
 
 function Header() {
     let navigate = useNavigate()

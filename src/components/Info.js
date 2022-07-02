@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react'
 import { $axios } from '../utils/axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
 
 function Info () {
     const navigate = useNavigate()
     const API_URL = process.env.REACT_APP_API_URL
-    const token = localStorage.getItem('token')
+    const { token } = useSelector(state => state)
 
     const [userName, setUserName] = useState('')
     const [userEmail, setUserEmail] = useState('')
@@ -87,7 +88,7 @@ function Info () {
             <Row className={styles.infoRow}>
                 <Col xs={12} sm={12} md={8} lg={6} xl={4} className={styles.formContainer}>
                     <h1>마이페이지</h1>
-                    <p>회원가입을 진행해 주세요. 👤</p>
+                    <p>회원 정보를 변경해 보세요. 🔄</p>
                     <form onSubmit={editInfo} className={styles.infoContainerForm}>
                         <Form.Group controlId="formFile" className={`${styles.avatarFileGroup} mb-3`}>
                             <Form.Label>

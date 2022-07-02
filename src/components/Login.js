@@ -1,6 +1,6 @@
 import { $axios } from "../utils/axios"
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import styles from '../scss/Login.module.scss'
 import { Container, Row, Col, Button } from "react-bootstrap"
@@ -9,7 +9,6 @@ import { setUserInfo } from '../slices/userSlice'
 import { setToken } from '../slices/tokenSlice'
 
 function Login() {
-    const { user, token } = useSelector(state => state)
     const dispatch = useDispatch()
     const API_URL = process.env.REACT_APP_API_URL
 
@@ -29,20 +28,6 @@ function Login() {
             default:
         }
     }
-    // const getUserInfo = () => {
-    //     try {
-    //         $axios.get(`${API_URL}/api/v1/user_information`).then(res => {
-    //             const {data: {data}} = res
-    //             const parsedUserData = JSON.stringify(data)
-    //             localStorage.setItem('userData', parsedUserData)
-    //             navigate('/')
-    //         }).catch(err => {
-    //             console.log(err);
-    //         })
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
     const login = async (e) => {
         e.preventDefault()
         const loginForm = {
@@ -54,12 +39,8 @@ function Login() {
             const { data: { token: { accessToken }, user, message}} = res
             dispatch(setUserInfo(user))
             dispatch(setToken(accessToken))
-            // setHeadersToken(accessToken)
-            // getUserInfo()
             toast.success(message)
-            console.log('도랏나');
             navigate('/')
-            console.log('도랏나22');
         } catch (err) {
             console.log(err);
         }

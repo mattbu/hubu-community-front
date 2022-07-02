@@ -98,7 +98,7 @@ function Comments() {
             <Row>
                 <Col xs={12} className={styles.commentContainer}>
                     <hr />
-                    <h6 className={styles.commentTitle}>댓글</h6>
+                    <h6 className={styles.commentTitle}>댓글 ({comments.length})</h6>
                     <div className={styles.commentFormContainer}>
                         <form className={styles.commentForm} onSubmit={postComment}>
                             <input className={styles.commentInput} type="text" name="comment" placeholder="댓글을 남겨보세요." value={comment} onChange={inputChange}/>
