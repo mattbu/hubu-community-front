@@ -46,7 +46,7 @@ function Header() {
                             <Button className={styles.backBtn} onClick={() => navigate(-1)}><FiArrowLeft/></Button>
                             <Link to="/" className={styles.navBrand}>HUBU</Link>
                         </Col>
-                        {/* <Col xs={6} sm={4} className="text-right">
+                        <Col xs={6} sm={4} className="text-right">
                         { token ? 
                         <Dropdown className={styles.dropdown}>
                             <Dropdown.Toggle className={styles.dropdownToggle}>
@@ -64,7 +64,7 @@ function Header() {
                             </Dropdown.Menu>
                        </Dropdown> : null
                         }
-                        </Col> */}
+                        </Col>
                     </Row>
                 </Container>
             </Navbar>

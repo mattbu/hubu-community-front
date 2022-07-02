@@ -3,8 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { Button, Container, Row, Col, Spinner } from 'react-bootstrap'
+import { Button, Container, Row, Col } from 'react-bootstrap'
 import Comments from './Comments';
+import LoadingSpinner from './ui/LoadingSpinner';
 
 function Detail() {
     const API_URL = process.env.REACT_APP_API_URL
@@ -31,50 +32,41 @@ function Detail() {
     }, [])
     return (
         <>
-            { !isLoading ? <div>
+            { !isLoading ?
+            <div>
                 <Container className={styles.detailContainer}>
                     <Row>
                         <Col>
-                            <Container className="px-0">
-                                <Row>
-                                    <Col>
-                                        <h1>{detail.title}</h1>
-                                        <p className={styles.textMuted}>{moment(detail.created_at).format('YYYY-MM-DD hh:mm')}</p>
-                                    </Col>
-                                    { currentUser.id === detail.user?.id ? 
-                                    <Col xs={3} className="text-right">
-                                        <Button className={styles.editBtn} onClick={() => navigate(`/detail/${params.id}/edit`, { state: {task: detail}})}>수정</Button>
-                                    </Col> 
-                                : null 
+                            <h1>{detail.title}</h1>
+                        </Col>
+                        { currentUser.id === detail.user?.id ? 
+                            <Col xs={3} className="text-right">
+                                <Button className={styles.editBtn} onClick={() => navigate(`/detail/${params.id}/edit`, { state: {task: detail}})}>수정</Button>
+                            </Col> : null 
+                        }
+                    </Row>
+                    <Row>
+                        <Col className={styles.userInfoColumn}>
+                            { detail.user?.avatar_img ? <div className={styles.avatarPreview}><img src={detail.user?.avatar_img}/></div> 
+                            : <div className={styles.avatarDefault} />
                             }
-                                </Row>
-                            </Container>
-                            <Container className="px-0 mt-2">
-                                <Row>
-                                    <Col xs={2} md={1} className="pe-0">
-                                        { detail.user?.avatar_img ? <div className={styles.avatarPreview}><img src={detail.user?.avatar_img}/></div> 
-                                        : <div className={styles.avatarDefault} />
-                                        }
-                                    </Col>
-                                    <Col className="ps-0">
-                                        <h6 className={styles.userName}>{detail.user?.name}</h6>
-                                        <h6 className={styles.userEmail}>{detail.user?.email}</h6>
-                                    </Col>
-                                </Row>
-                            </Container>
+                            <span className={styles.userInfo}>
+                                <span className={styles.userName}>{detail.user?.name}</span>
+                                <span className={styles.postDate}> | </span>
+                                <span className={styles.userEmail}>{detail.user?.email}</span>
+                                <p className={styles.postDate}>{moment(detail.created_at).format('YYYY-MM-DD hh:mm')}</p>
+                            </span>
+                        </Col>
+                        <Col xs={12}>
+                            <hr />
                             <p className={styles.description}>{detail.description}</p>
                         </Col>
                     </Row>
                 </Container>
                 <Comments />
             </div> : 
-            <Container className={styles.detailContainer}>
-                <Row>
-                    <Col className='text-center'>
-                        <Spinner animation="border" variant="primary" />
-                    </Col>
-                </Row>
-            </Container>}
+            <LoadingSpinner spinnerPadding={styles.detailContainer} />
+            }
         </>
     )
 }

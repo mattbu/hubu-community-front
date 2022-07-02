@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import styles from '../scss/Boards.module.scss'
 import { $axios } from "../utils/axios"
-import moment from "moment"
-import { Button, Container, Row, Col, Card, Spinner } from 'react-bootstrap'
+import { Button, Container, Row, Col  } from 'react-bootstrap'
 import { toast } from 'react-toastify'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
+import BoardCard from "./ui/BoardCard"
+import LoadingSpinner from "./ui/LoadingSpinner"
 
 function Boards() {
     let navigate = useNavigate()
     
     const API_URL = process.env.REACT_APP_API_URL
     const token = localStorage.getItem('token')
-    const currentUser = JSON.parse(localStorage.getItem('userData'))
 
     const [isLoading, setIsLoading] = useState(false)
     const [lists, setLists] = useState([])
     const getList = async () => {
         try {
             setIsLoading(true)
-            const res = await $axios.get(`${process.env.REACT_APP_API_URL}/api/v1/boards`, {
+            const res = await $axios.get(`${API_URL}/api/v1/boards`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -30,86 +33,70 @@ function Boards() {
         }
     }
     const deletePost = (e, id) => {
-        const confirm = window.confirm('삭제 하시겠어요?')
-        if (confirm) {
-            $axios.delete(`${process.env.REACT_APP_API_URL}/api/v1/boards/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+        confirmAlert({
+            title: '게시물 삭제',
+            message: '해당 글을 삭제 하시겠어요?',
+            buttons: [
+              {
+                label: '확인',
+                onClick: () => {
+                    $axios.delete(`${API_URL}/api/v1/boards/${id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    .then(res => {
+                        const { data: { message }} = res
+                        toast.success(message)
+                        getList()
+                    }).catch(err => {
+                        toast.error(err.response.data.message)
+                    })
                 }
-            })
-            .then(res => {
-                const { data: {message}} = res
-                toast.success(message)
-                getList()
-            }).catch(err => {
-                toast.error(err.response.data.message)
-            })
-        } else {
-            alert('삭제 취소됨')
-        }
+              },
+              {
+                label: '취소',
+                onClick: () => toast.error('삭제가 취소 되었습니다.')
+              }
+            ]
+          });
     }
     useEffect(() => {
         getList()
     }, [])
     return (
-    <> 
-        { !isLoading ? <Container className={styles.boardContainer}>
-            <Row>
-                <Col>
-                    <div className={styles.titleSection}>
-                        <h1>리스트</h1>
-                        <Button className={styles.writeButton} onClick={() => navigate('/write')}>글쓰기</Button>
-                    </div>
-                    <ul className={styles.listInit}>
-                        { lists.length > 0 ? 
-                            lists.map(item => {
-                                return (
-                                    <li key={item.id}>
-                                        <Card className={styles.card}>
-                                            <Container className={styles.cardHeader}>
-                                                <Row>
-                                                    <Col>
-                                                        <h2 onClick={() => navigate(`/detail/${item.id}`, {state:{post:item}})}>{item.title}</h2>
-                                                        <h6 className={styles.textMuted}>{moment(item.created_at).format('YYYY-MM-DD hh:mm')}</h6>
-                                                    </Col>
-                                                    { currentUser.id === item.user_id ? <Col xs={3} className="text-right">
-                                                        <Button className={styles.deleteBtn} onClick={(e) => deletePost(e, item.id)}>삭제</Button>
-                                                    </Col> : null 
-                                                    }
-                                                </Row>
-                                            </Container>
-                                            <Container className="px-0 mt-2">
-                                                <Row>
-                                                    <Col xs={1} className="pe-0 text-center">
-                                                        {
-                                                            item.user.avatar_img ? <div className={styles.avatarPreview}><img src={item.user.avatar_img}/></div>
-                                                            : <div className={`${styles.avatarDefault}`} />
-                                                        }
-                                                    </Col>
-                                                    <Col className="ps-0">
-                                                        <h6 className={styles.userName}>{item.user.name}</h6>
-                                                        <h6 className={styles.userEmail}>{item.user.email}</h6>
-                                                    </Col>
-                                                </Row>
-                                            </Container>
-                                            <p className={styles.description}>{item.description}</p>
-                                        </Card>
-                                    </li>
-                                )
-                            })
-                            : <h3 className={styles.noContent}>등록된 게시글이 없습니다.</h3>
-                        }
-                    </ul>
-                </Col>
-            </Row>
-        </Container> : <Container className={styles.boardContainer}>
+        <> 
+            { !isLoading ?
+            <Container className={styles.boardContainer}>
                 <Row>
-                    <Col className='text-center'>
-                        <Spinner animation="border" variant="primary" />
+                    <Col>
+                        <h1>커뮤니티</h1>
+                        <p>자유롭게 커뮤니티에 참여해 보세요. 👥</p>
+                    </Col>
+                    <Col className="text-right">
+                        <Button className={styles.writeBtn} onClick={() => navigate('/write')}>글쓰기</Button>
                     </Col>
                 </Row>
-            </Container>}
-    </>
+                <Row>
+                    <Col>
+                        <ul className={styles.listInit}>
+                            { lists.length > 0 ? 
+                                lists.map(item => {
+                                    return (
+                                        <li key={item.id}>
+                                            <BoardCard post={item} getList={getList} deletePost={deletePost} />
+                                        </li>
+                                    )
+                                })
+                                : <h3 className={styles.noContent}>등록된 게시글이 없습니다.</h3>
+                            }
+                        </ul>
+                    </Col>
+                </Row>
+            </Container> :
+            <LoadingSpinner spinnerPadding={styles.boardContainer} />
+            }
+        </>
     )
 }
 

@@ -1,78 +1,74 @@
 .boardContainer {
     margin-top: 60px;
-    .titleSection {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        h1 {
-            margin: 0;
-        }
-        .writeButton {
-            padding: 0.5rem 1rem;
+    .writeBtn {
+        padding: 0.5rem 1rem;
+        background-color: #51557E;
+        border: none;
+        &:hover {
             background-color: #51557E;
-            border: none;
-            &:hover {
-                background-color: #51557E;
-            }
-            &:focus {
-                box-shadow: none!important;
-                background-color: #51557E;
-            }
+        }
+        &:focus {
+            box-shadow: none!important;
+            background-color: #51557E;
         }
     }
     .listInit {
         list-style: none;
         padding-left: 0;
+        li {
+            &:first-child {
+                margin-top: 40px;
+            }
+        }
         .card {
-            border: solid 1px #d6d6d6;
+            background-color: white;
+            box-shadow: 10px 5px 20px 5px rgba(0,0,0,0.01);
             border-radius: 12px;
             padding: 24px 24px 12px 24px;
-            margin: 12px 0;
-            &Header {
-                padding: 0;
-                .deleteBtn {
-                    background-color: tomato;
-                    border: none;
-                    padding: 0.5rem 2rem;
+            margin: 4px 0;
+            .avatarColumn {
+                display: flex;
+                .avatarPreview {
+                    display: inline-flex;
+                    width: 40px;
+                    height: 40px;
+                    background-color: transparent;
+                    object-fit: contain;
+                    border-radius: 50%;
+                    margin-right: 12px;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        max-height: auto;
+                        border-radius: inherit;
+                        object-fit: cover;
+                    }
+                }
+                .avatarDefault {
+                    display: inline-flex;
+                    width: 40px;
+                    height: 40px;
+                    background-color: #51557E;
+                    object-fit: contain;
+                    border-radius: 50%;
                 }
             }
-            .avatarPreview {
-                width: 40px;
-                height: 40px;
-                background-color: transparent;
-                object-fit: contain;
-                border-radius: 50%;
-                img {
-                    width: 100%;
-                    height: 100%;
-                    max-height: auto;
-                    border-radius: inherit;
-                    object-fit: cover;
-                }
-            }
-            .avatarDefault {
-                width: 40px;
-                height: 40px;
-                background-color: #51557E;
-                object-fit: contain;
-                border-radius: 50%;
-            }
-            h2 {
+            h4 {
                 cursor: pointer;
-                color: darkslategray;
             }
-            h6 {
-                font-size: 12px;
-                margin-top: 2px;
-            }
-            .userName {
+            .userInfo {
+                align-self: center;
                 color: #51557E;
-            }
-            .userEmail {
-                color: #a2a5cd;
-            }
-            .textMuted {
-                color: #a5a5a5;
+                font-size: 12px;
+                .userEmail {
+                    color: #a2a5cd;
+                    font-size: 12px;
+                }
+                .postDate {
+                    color: #a5a5a5;
+                    font-size: 12px;
+                    margin: 0;
+                }
             }
             .description {
                 margin-top: 20px;
@@ -83,6 +79,18 @@
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 word-break: keep-all;   // 문단으로 끊어져서 줄바꿈 됨
+            }
+            .deleteBtn {
+                padding: 0; 
+                background-color: transparent;
+                border: none;
+                &:hover {
+                    background-color: transparent;
+                }
+                &:focus {
+                    box-shadow: none!important;
+                    background-color: transparent;
+                }
             }
         }
     }

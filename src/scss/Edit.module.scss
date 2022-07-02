@@ -1,15 +1,27 @@
 .editContainer {
-    margin-top: 60px;
-    form {
-        padding: 40px!important;
-        background-color: white;
+    .editRow {
+        justify-content: center;
+        padding: 0 1rem;
+        min-height: 90vh;
+    }
+    .editForm {
+        all: unset;
+        input, textarea {
+            width: 100%;
+            max-width: 100%;
+        }
     }
     .editBtn {
-        margin-top: 8px;
-        padding: 0.5rem 1rem;
+        width: 100%;
+        padding: 0.5rem 2rem;
+        margin-top: 32px;
         background-color: #51557E;
         border: none;
         &:hover {
+            background-color: #51557E;
+        }
+        &:focus {
+            box-shadow: none!important;
             background-color: #51557E;
         }
     }
