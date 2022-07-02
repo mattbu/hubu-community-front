@@ -6,7 +6,7 @@
         color: #51557E;
     }
     .commentFormContainer {
-        background-color: white;
+        // background-color: white;
         border-radius: 12px;
         padding: 4 0px;
         margin-bottom: 16px;
@@ -14,9 +14,28 @@
             all: unset;
             width: 100%;
             max-width: 100%;
-            input {
+            .commentInput {
                 display: inline-flex;
                 max-width: 100%;
+                width: 95.7%;
+                @media screen and (max-width: 1400px) {
+                    width: 95%;
+                }
+                @media screen and (max-width: 1200px) {
+                    width: 94%;
+                }
+                @media screen and (max-width: 992px) {
+                    width: 92%;
+                }
+                @media screen and (max-width: 768px) {
+                    width: 89%;
+                }
+                @media screen and (max-width: 519px) {
+                    width: 88.5%;
+                }
+                @media screen and (max-width: 476px) {
+                    width: 85%;
+                }
             }
             .replyInput {
                 display: inline-flex;

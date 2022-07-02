@@ -79,7 +79,7 @@ function Boards() {
                 </Row>
                 <Row>
                     <Col>
-                        <ul className={styles.listInit}>
+                        <ul>
                             { lists.length > 0 ? 
                                 lists.map(item => {
                                     return (

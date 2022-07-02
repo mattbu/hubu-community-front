@@ -100,10 +100,8 @@ function Comments() {
                     <h6 className={styles.commentTitle}>댓글</h6>
                     <div className={styles.commentFormContainer}>
                         <form className={styles.commentForm} onSubmit={postComment}>
-                            <InputGroup>
-                                <FormControl name="comment" placeholder="댓글을 남겨보세요." type="text" value={comment} onChange={inputChange}/>
-                                <Button className={styles.enrollBtn} type="submit">등록</Button>
-                            </InputGroup>
+                            <input className={styles.commentInput} type="text" name="comment" placeholder="댓글을 남겨보세요." value={comment} onChange={inputChange}/>
+                            <Button className={styles.enrollBtn} type="submit">등록</Button>
                         </form>
                     </div>
                     {
