@@ -40,8 +40,8 @@ function BoardCard({ post, getList, deletePost }) {
                     <p className={styles.description}>{post.description}</p>
                 </Col>
                 <Col className="text-right align-self-center">
-                    <MessageCircle size={16} />
-                    <span className="ms-1">{post.comments.length}</span>
+                    <MessageCircle size={16} color={'#51557E'} />
+                    <span className={styles.commentsLength}>{post.comments.length}</span>
                 </Col>
             </Row>
         </Container>

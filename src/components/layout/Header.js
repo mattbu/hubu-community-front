@@ -7,7 +7,8 @@ import UserDropdown from "../ui/UserDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../../slices/tokenSlice";
 import { setUserInfo } from "../../slices/userSlice";
-import { $axios, setHeadersToken } from "../../utils/axios";
+import { $axios } from "../../utils/axios";
+import { logRoles } from "@testing-library/react";
 
 function Header() {
     let navigate = useNavigate()
@@ -19,24 +20,20 @@ function Header() {
 
     const logout = async () => {
         try {
-            setHeadersToken(token)
-            const res = await $axios.delete(`${API_URL}/api/v1/logout`)
-            const {data: {data: message}} = res
+            const res = await $axios.delete(`${API_URL}/api/v1/logout`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            const { data:{ message } } = res
             toast.success(message)
             dispatch(setToken(null))
             dispatch(setUserInfo({}))
-            // navigate('/')
+            navigate('/')
         } catch (err) {
             console.log(err);
         }
     }
-
-    // const logout = () => {
-    //     toast.success('로그아웃 되었습니다.')
-    //     dispatch(setToken(null))
-    //     dispatch(setUserInfo({}))
-    //     navigate('/')
-    // }
     return (
         <Navbar bg="light" sticky="top" expand="lg" className={styles.headerContainer}>
             <Container className="pe-0">

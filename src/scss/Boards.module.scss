@@ -1,5 +1,4 @@
 .boardContainer {
-    margin-top: 60px;
     .writeBtn {
         padding: 0.5rem 1rem;
         background-color: #51557E;
@@ -88,6 +87,12 @@
                 box-shadow: none!important;
                 background-color: transparent;
             }
+        }
+        .commentsLength {
+            vertical-align: middle;
+            color: #51557E;
+            margin-left: 4px;
+            font-size: 14px;
         }
     }
     .noContent {
