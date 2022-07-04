@@ -14,8 +14,8 @@ export const setHeadersToken = (token) => {
     });
 };
 
-$axios.interceptors.response.use(response => {
-    return response;
-}, error => {
-    toast.error(error.response.data.message)
-})
+// $axios.interceptors.response.use(response => {
+//     return response;
+// }, error => {
+//     toast.error(error)
+// })
