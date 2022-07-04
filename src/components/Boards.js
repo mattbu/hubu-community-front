@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styles from '../scss/Boards.module.scss'
-import { $axios } from "../utils/axios"
+import { $axios, setHeadersToken } from "../utils/axios"
 import { Button, Container, Row, Col  } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import { confirmAlert } from 'react-confirm-alert'
@@ -21,11 +21,7 @@ function Boards() {
     const getList = async () => {
         try {
             setIsLoading(true)
-            const res = await $axios.get(`${API_URL}/api/v1/boards`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
+            const res = await $axios.get(`${API_URL}/api/v1/boards`)
             setLists(res.data)
             setIsLoading(false)
         } catch (err) {
@@ -40,11 +36,8 @@ function Boards() {
               {
                 label: '확인',
                 onClick: () => {
-                    $axios.delete(`${API_URL}/api/v1/boards/${id}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
+                    setHeadersToken(token)
+                    $axios.delete(`${API_URL}/api/v1/boards/${id}`)
                     .then(res => {
                         const { data: { message }} = res
                         toast.success(message)
@@ -62,6 +55,7 @@ function Boards() {
           });
     }
     useEffect(() => {
+        setHeadersToken(token)
         getList()
     }, [])
     return (
