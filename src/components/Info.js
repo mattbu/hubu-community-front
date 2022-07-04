@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react'
 import { $axios } from '../utils/axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUserInfo } from '../slices/userSlice'
 
 function Info () {
     const navigate = useNavigate()
     const API_URL = process.env.REACT_APP_API_URL
-    const { token } = useSelector(state => state)
+    const { token, user } = useSelector(state => state)
+
+    const dispatch = useDispatch()
 
     const [userName, setUserName] = useState('')
     const [userEmail, setUserEmail] = useState('')
@@ -57,20 +60,17 @@ function Info () {
         }
         const updateUser = $axios.post(`${API_URL}/api/v1/user_information`, form, config)
         updateUser.then(res => {
-            const {data: {data, message}} = res
-            localStorage.removeItem('userData')
-            const parsedUserData = JSON.stringify(data)
-            localStorage.setItem('userData', parsedUserData)
+            const { data: { data, message } } = res
+            dispatch(setUserInfo(data))
             toast.success(message)
             navigate('/')
             
         }).catch(err => {
-            toast.error(err)
+            toast.error(err.response.data.message)
         })
         
     }
     useEffect(() => {
-        // setHeadersToken(token)
         const fetchUserInfo = $axios.get(`${API_URL}/api/v1/user_information`, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -105,9 +105,9 @@ function Info () {
                         </Form.Group>
                         <div>
                             <div>
-                                <label htmlFor="email-input">이메일</label>
-                                <input id="email-input" type="text" placeholder="이메일" value={userEmail} disabled/>
-                                <small>이메일은 변경이 불가합니다.</small>
+                                <label htmlFor="email-input">아이디</label>
+                                <input id="email-input" type="text" placeholder="아이디" value={userEmail} disabled/>
+                                <small>아이디는 변경이 불가합니다.</small>
                             </div>
                             <label htmlFor="name-input" className={'mt-3'}>이름</label>
                             <input name="name" id="name-input" type="text" placeholder="이름" value={userName} onChange={inputChange}/>

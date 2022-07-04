@@ -34,14 +34,13 @@ function Register() {
             default:
         }
     }
-    const login = (token) => {
+    const login = () => {
         const loginForm = {
             user_id: userId,
             password: password
         }
-        $axios.post(`${API_URL}/api/v1/auth/login`, loginForm) //
-        .then(res => {
-            const { data: { token: { accessToken }, user, message}} = res
+        $axios.post(`${API_URL}/api/v1/auth/login`, loginForm).then(res => {
+            const { data: { token: { accessToken }, user } } = res
             dispatch(setToken(accessToken))
             dispatch(setUserInfo(user))
             navigate('/')
@@ -82,11 +81,11 @@ function Register() {
             if (res) {
                 const {data: { token, message }} = res
                 toast.success(message)
-                login(token)
+                login()
             }
         })
         .catch(err => {
-            console.log(err);
+            toast.error(err.response.data.message)
         })
     }
     return (

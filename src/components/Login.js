@@ -11,7 +11,6 @@ import { setToken } from '../slices/tokenSlice'
 function Login() {
     const dispatch = useDispatch()
     const API_URL = process.env.REACT_APP_API_URL
-    console.log(process.env);
     let navigate = useNavigate()
 
     const [userId, setUserId] = useState('')
@@ -35,11 +34,8 @@ function Login() {
             password: password
         }
         try {
-            const res = await $axios.post('/api/v1/auth/login', loginForm)
-            console.log("check")
-            console.log(res);
-            const { data: { token: { accessToken }, user, message}} = res
-            console.log(res);
+            const res = await $axios.post(`${API_URL}/api/v1/auth/login`, loginForm)
+            const { data: { token: { accessToken }, user, message } } = res
             dispatch(setUserInfo(user))
             dispatch(setToken(accessToken))
             toast.success(message)
