@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 export const $axios = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     timeout: 1000,
-    withCredentials: true
+    withCredentials: true,
 });
 
 export const setHeadersToken = (token) => {

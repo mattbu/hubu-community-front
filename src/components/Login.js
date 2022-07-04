@@ -35,14 +35,15 @@ function Login() {
             password: password
         }
         try {
-            const res = await $axios.post(`${API_URL}/api/v1/auth/login`, loginForm)
+            const res = await $axios.post('/api/v1/auth/login', loginForm)
+            console.log("check")
             console.log(res);
-            // const { data: { token: { accessToken }, user, message}} = res
-            // console.log(res);
-            // dispatch(setUserInfo(user))
-            // dispatch(setToken(accessToken))
-            // toast.success(message)
-            // navigate('/')
+            const { data: { token: { accessToken }, user, message}} = res
+            console.log(res);
+            dispatch(setUserInfo(user))
+            dispatch(setToken(accessToken))
+            toast.success(message)
+            navigate('/')
         } catch (err) {
             console.log(err);
         }
