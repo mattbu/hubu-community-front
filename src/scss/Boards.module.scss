@@ -1,3 +1,13 @@
+@mixin order-btn($orderBtnColor) {
+    padding: 0;
+    margin-right: 16px;
+    background-color: transparent;
+    color: $orderBtnColor;
+    &:focus {
+        box-shadow: none;
+    }
+  }
+
 .boardContainer {
     .writeBtn {
         padding: 0.5rem 1rem;
@@ -11,9 +21,20 @@
             background-color: #51557E;
         }
     }
+    .orderBtnContainer {
+        margin-top: 40px;
+        .orderBtnActive {
+            $orderBtnColor: #51557E;
+            @include order-btn($orderBtnColor);
+        }
+        .orderBtn {
+            $orderBtnColor: #a2a5cd;
+            @include order-btn($orderBtnColor);
+        }
+    }
     li {
         &:first-child {
-            margin-top: 40px;
+            margin-top: 20px;
         }
     }
     .card {

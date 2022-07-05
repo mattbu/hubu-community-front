@@ -9,6 +9,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import BoardCard from "./ui/BoardCard"
 import LoadingSpinner from "./ui/LoadingSpinner"
 import { useSelector } from "react-redux"
+import Pagination from "./ui/Pagination"
 
 function Boards() {
     let navigate = useNavigate()
@@ -18,20 +19,39 @@ function Boards() {
 
     const [isLoading, setIsLoading] = useState(false)
     const [lists, setLists] = useState([])
-    const getList = async () => {
+    const [orderBy, setOrderBy] = useState('desc')
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [limit, setLimit] = useState(1)
+    const [total, setTotal] = useState(1)
+
+    const getList = async (orderBy, page) => {
         try {
             setIsLoading(true)
             const res = await $axios.get(`${API_URL}/api/v1/boards`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
+                },
+                params: {
+                    'order_by': orderBy,
+                    page: currentPage
                 }
             })
-            setLists(res.data)
+            const { data: { data, per_page, total } } = res
+            setLists(data)
+            setLimit(per_page)
+            setTotal(total)
             setIsLoading(false)
         } catch (err) {
             console.log(err);
         }
     }
+
+    const changeOrder = (order) => {
+        setOrderBy(order)
+        getList(order)
+    }
+
     const deletePost = (e, id) => {
         confirmAlert({
             title: '게시물 삭제',
@@ -61,12 +81,13 @@ function Boards() {
             ]
           });
     }
+
     useEffect(() => {
-        getList()
-    }, [])
+        getList(orderBy, currentPage)
+        console.log(currentPage);
+    }, [currentPage])
     return (
         <> 
-            { !isLoading ?
             <Container className={styles.boardContainer}>
                 <Row>
                     <Col>
@@ -79,23 +100,30 @@ function Boards() {
                 </Row>
                 <Row>
                     <Col>
-                        <ul>
-                            { lists.length > 0 ? 
-                                lists.map(item => {
-                                    return (
-                                        <li key={item.id}>
-                                            <BoardCard post={item} getList={getList} deletePost={deletePost} />
-                                        </li>
-                                    )
-                                })
-                                : <h3 className={styles.noContent}>등록된 게시글이 없습니다.</h3>
-                            }
-                        </ul>
+                        <div className={styles.orderBtnContainer}>
+                            <Button className={orderBy === 'desc' ? styles.orderBtnActive : styles.orderBtn} onClick={() => changeOrder('desc')}>최신순</Button>
+                            <Button className={orderBy === 'asc' ? styles.orderBtnActive : styles.orderBtn} onClick={() => changeOrder('asc')}>등록순</Button>
+                        </div>
+                        {
+                                !isLoading ?
+                                <ul>
+                                    { lists.length > 0 ? 
+                                        lists.map(item => {
+                                            return (
+                                                <li key={item.id}>
+                                                    <BoardCard post={item} getList={getList} deletePost={deletePost} />
+                                                </li>
+                                            )
+                                        })
+                                        : <h3 className={styles.noContent}>등록된 게시글이 없습니다.</h3>
+                                    }
+                                </ul> :
+                            <LoadingSpinner />
+                        }
+                        <Pagination page={currentPage} setPage={setCurrentPage} limit={limit} total={total} />
                     </Col>
                 </Row>
-            </Container> :
-            <LoadingSpinner spinnerPadding={styles.boardContainer} />
-            }
+            </Container> 
         </>
     )
 }

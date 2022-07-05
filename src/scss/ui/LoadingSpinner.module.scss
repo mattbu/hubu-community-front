@@ -1,0 +1,11 @@
+.spinner {
+    padding-top: 60px;
+    &Row {
+        display: flex;
+        height: 100px;
+    }
+    &Col {
+        text-align: center;
+        align-self: center;
+    }
+}

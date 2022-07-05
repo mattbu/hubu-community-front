@@ -1,9 +1,10 @@
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
-function LoadingSpinner({ spinnerPadding }) {
+import styles from '../../scss/ui/LoadingSpinner.module.scss'
+function LoadingSpinner() {
     return (
-        <Container className={spinnerPadding}>
-            <Row>
-                <Col className='text-center'>
+        <Container className={styles.spinner}>
+            <Row className={styles.spinnerRow}>
+                <Col className={styles.spinnerCol}>
                     <Spinner animation="border" />
                 </Col>
             </Row>

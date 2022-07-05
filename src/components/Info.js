@@ -68,7 +68,7 @@ function Info () {
             const { data: { data, message } } = res
             dispatch(setUserInfo(data))
             toast.success(message)
-            navigate('/')
+            // navigate('/')
             
         }).catch(err => {
             toast.error(err.response.data.message)

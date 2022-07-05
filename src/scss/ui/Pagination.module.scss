@@ -1,0 +1,12 @@
+.pagination {
+    padding: 24px 0;
+    &Row {
+
+    }
+    &Col {
+        text-align: center;
+        button {
+            margin: 0 2px;
+        }
+    }
+}

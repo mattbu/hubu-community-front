@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { CornerDownRight, Trash2 } from 'react-feather';
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import LoadingSpinner from "./ui/LoadingSpinner";
 
 import CommentCard from "./ui/CommentCard";
 import { useSelector } from "react-redux";
@@ -17,6 +18,7 @@ function Comments() {
     const { token, user } = useSelector(state => state)
     const currentUser = user
 
+    const [isLoading, setIsLoading] = useState(false);
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [reply, setReply] = useState('');
@@ -24,12 +26,14 @@ function Comments() {
     let params = useParams()
 
     const getComments = () => {
+        setIsLoading(true)
         $axios.get(`/api/v1/comments/${params.id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then(res => {
-            const {data} = res
+            const { data } = res
+            setIsLoading(false)
             setComments(data)
         }, {
             headers: {
@@ -123,7 +127,6 @@ function Comments() {
         input.hidden = !input.hidden
     }
     useEffect(() => {
-        // setHeadersToken(token)
         getComments()
     }, [])
     return (
@@ -139,7 +142,8 @@ function Comments() {
                         </form>
                     </div>
                     {
-                        comments.map(comment => {
+                        isLoading ? <LoadingSpinner />
+                         : !isLoading && comments.length > 0 ? comments.map(comment => {
                             return (
                                 <Container key={comment.id} className={styles.commentCard}>
                                 <Row>
@@ -191,7 +195,10 @@ function Comments() {
                                 </div>
                             </Container>
                             )
-                        })
+                        }) : <div className={styles.noContent}>
+                                <h5>등록된 댓글이 없습니다.</h5>
+                                <p>댓글을 남겨보세요! ✍🏻</p>  
+                            </div> 
                     }
                 </Col>
             </Row>
