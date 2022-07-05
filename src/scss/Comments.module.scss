@@ -119,6 +119,16 @@
                 }
             }
         }
+        .commentDeleteBtn {
+            padding: 0 8px 0 0;
+            border: none;
+            text-align: right;
+            background-color: transparent;
+            &:focus {
+                box-shadow: none!important;
+                background-color: transparent;
+            }
+        }
     }
     .replyBtn {
         background-color: transparent;

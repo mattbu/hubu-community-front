@@ -1,5 +1,5 @@
 import { $axios } from "../utils/axios"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import styles from '../scss/Login.module.scss'
@@ -41,10 +41,9 @@ function Login() {
             toast.success(message)
             navigate('/')
         } catch (err) {
-            console.log(err);
+            toast.error(err.response.data.message)
         }
     }
-    useEffect(() => {}, [])
     return (
         <Container className={styles.loginContainer}>
             <Row className={styles.loginRow}>

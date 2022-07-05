@@ -5,7 +5,9 @@ import { Container, Row, Col, Button } from "react-bootstrap"
 import { useParams } from "react-router-dom";
 import moment from 'moment';
 import { toast } from 'react-toastify'
-import { CornerDownRight } from 'react-feather';
+import { CornerDownRight, Trash2 } from 'react-feather';
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import CommentCard from "./ui/CommentCard";
 import { useSelector } from "react-redux";
@@ -73,6 +75,7 @@ function Comments() {
             console.log(err);
         })
     }
+
     const inputChange = (e) => {
         const {target: {value, name}} = e
         switch (name) {
@@ -85,6 +88,36 @@ function Comments() {
             default:
         } 
     }
+
+    const deleteComment = (id) => {
+        confirmAlert({
+            title: '댓글 삭제',
+            message: '해당 댓글을 삭제 하시겠어요?',
+            buttons: [
+              {
+                label: '확인',
+                onClick: () => {
+                    $axios.delete(`${API_URL}/api/v1/comments/${id}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    }).then(res => {
+                        const { data: { message }} = res
+                        toast.success(message)
+                        getComments()
+                    }).catch(err => {
+                        toast.error(err.response.data.message)
+                    })
+                }
+              },
+              {
+                label: '취소',
+                onClick: () => toast.error('삭제가 취소 되었습니다.')
+              }
+            ]
+          });
+    }
+
     const openReplyInput = (id) => {
         const input = document.getElementById(`reply-${id}`)
         input.hidden = !input.hidden
@@ -119,6 +152,11 @@ function Comments() {
                                             <p className={styles.commentDate}>{moment(comment.created_at).format('YYYY-MM-DD hh:mm')}</p>
                                         </span>
                                     </Col>
+                                    { currentUser.id === comment.user_id ? <Col className="text-right">
+                                        <Button className={styles.commentDeleteBtn} onClick={(e) => deleteComment(comment.id)}>
+                                            <Trash2 color="tomato" size={20} />
+                                        </Button>
+                                    </Col> : null }
                                 </Row>
                                 <Row className="mt-2">
                                     <Col>

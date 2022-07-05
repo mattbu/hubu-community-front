@@ -58,5 +58,10 @@
             box-shadow: none!important;
             background-color: #51557E;
         }
+        &:disabled {
+            background-color: #51557E;
+            pointer-events: unset;
+            cursor: not-allowed;
+        }
     }
 }

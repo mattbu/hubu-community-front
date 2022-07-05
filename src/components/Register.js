@@ -16,6 +16,7 @@ function Register() {
     const [userId, setUserId] = useState('')
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
+    const [passwordCheck, setPasswordCheck] = useState('')
     const [previewImg, setPreviewImg] = useState('');
     const [avatarImg, setAvatarImg] = useState(null);
 
@@ -30,6 +31,9 @@ function Register() {
                 break
             case 'password':
                 setPassword(value)
+                break
+            case 'password-check':
+                setPasswordCheck(value)
                 break
             default:
         }
@@ -51,11 +55,14 @@ function Register() {
     }
 
     const uploadAvatar = (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files[0]
+        const maxSize = 2097152
        
-        if (file !== undefined) {
+        if (file !== undefined && file.size < maxSize) {
             setPreviewImg(URL.createObjectURL(file))
             setAvatarImg(file)
+        } else {
+            toast.error('이미지 사이즈는 2MB 이내로 등록 가능합니다.')
         }
     }
 
@@ -68,6 +75,27 @@ function Register() {
         return form
     }
 
+    const registerValidator = () => {
+        if (!userId) {
+            toast.error('아이디를 입력해 주세요.')
+            return false
+        } else if (!userName) {
+            toast.error('이름을 입력해 주세요.')
+            return false
+        } else if (!password) {
+            toast.error('비밀번호를 입력해 주세요.')
+            return false
+        } else if (password.length < 6) {
+            toast.error('비밀번호는 6자리 이상으로 입력해 주세요.')
+            return false
+        } return true
+    }
+
+    const enableBtn = () => {
+        if (userId && userName && password && password.length >= 6) return true
+        return false
+    }
+
     const register = (e) => {
         e.preventDefault()
         const form = getForm()
@@ -76,17 +104,25 @@ function Register() {
                 'Content_Type': 'multipart/form-data'
             }
         }
-        $axios.post(`${API_URL}/api/v1/auth/register`, form, config) //
-        .then(res => {
-            if (res) {
-                const {data: { token, message }} = res
-                toast.success(message)
-                login()
-            }
-        })
-        .catch(err => {
-            toast.error(err.response.data.message)
-        })
+        if (registerValidator()) {
+            $axios.post(`${API_URL}/api/v1/auth/register`, form, config) //
+            .then(res => {
+                if (res) {
+                    const {data: { token, message }} = res
+                    toast.success(message)
+                    login()
+                }
+            })
+            .catch(err => {
+                console.log(err.response);
+                if (err.response.status === 422) {
+                    toast.error(err.response.data.message.email[0])
+                    
+                } else if (err.response.status === 500) {
+                    toast.error(err.response.data.message)
+                }
+            })
+        }
     }
     return (
         <>
@@ -108,12 +144,14 @@ function Register() {
                             </Form.Group>
                             <div>
                                 <label htmlFor="id-input">아이디</label>
-                                <input name='id' id="id-input" type="text" placeholder="아이디" value={userId} onChange={inputChange} />
+                                <input name='id' id="id-input" type="text" placeholder="아이디를 입력해 주세요." value={userId} onChange={inputChange} aria-invalid={false}/>
                                 <label htmlFor="name-input" className={'mt-3'}>이름</label>
-                                <input name='name' id="name-input" type="text" placeholder="이름" value={userName} onChange={inputChange} />
+                                <input name='name' id="name-input" type="text" placeholder="이름을 입력해 주세요." value={userName} onChange={inputChange} />
                                 <label htmlFor="password-input" className={'mt-3'}>비밀번호</label>
-                                <input name="password" id="password-input" type="password" placeholder="비밀번호" value={password} onChange={inputChange} />
-                                <Button className={styles.registerBtn} type="submit">회원가입</Button>
+                                <input name="password" id="password-input" type="password" placeholder="비밀번호를 입력해 주세요." value={password} onChange={inputChange} />
+                                <label htmlFor="password-check-input" className={'mt-3'}>비밀번호 확인</label>
+                                <input name="password-check" id="password-check-input" type="password" placeholder="비밀번호" value={passwordCheck} onChange={inputChange} />
+                                <Button className={styles.registerBtn} type="submit" disabled={!enableBtn()}>회원가입</Button>
                             </div>
                         </form>
                     </Col>

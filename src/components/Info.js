@@ -35,11 +35,16 @@ function Info () {
         }
     }
     const uploadAvatar = (e) => {
-        const file = e.target.files[0];
-    
-        setNewImg(URL.createObjectURL(file))
-        setAvatarImg(file)
-        setDefaultImg('')
+        const file = e.target.files[0]
+        const maxSize = 2097152
+
+        if (file !== undefined && file.size < maxSize) {
+            setNewImg(URL.createObjectURL(file))
+            setAvatarImg(file)
+            setDefaultImg('')
+        } else {
+            toast.error('이미지 사이즈는 2MB 이내로 등록 가능합니다.')
+        }
     }
     const getForm = () => {
         const form = new FormData()
