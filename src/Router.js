@@ -1,4 +1,4 @@
-import { Routes, Route, Link, Navigate } from "react-router-dom"
+import { Routes, Route, Link, Navigate, useLocation } from "react-router-dom"
 import Login from './components/Login'
 import Register from "./components/Register"
 import Boards from "./components/Boards"
@@ -9,17 +9,30 @@ import Info from './components/Info'
 import NotFound from "./components/NotFound"
 import PrivateRoute from "./routes/PrivateRoute"
 import { useSelector } from "react-redux"
+import { useRef } from "react"
+import { useEffect } from "react"
+import { useState } from "react"
 function Router() {
     const { token } = useSelector(state => state)
+    const container = useRef(null)
+    const { pathname } = useLocation()
+    const [fade, setFade] = useState('')
+    useEffect(() => {
+        if (container) {
+            setFade('end')
+        }
+        return () => {
+            setFade('')
+        }
+    })
+    
     return (
-        <div className="main-container">
+        <div ref={container} className={`main-container start ${fade}`} >
             <Routes>
                 <Route
                     path="/"
                     element={<PrivateRoute component={<Boards />} />} 
                 />
-                {/* <Route path="/" element={ token ? <Navigate replace to="/boards"/> : <Navigate replace to="/login"/> }></Route> */}
-                {/* <Route path="/boards" element={<Boards />}></Route> */}
                 <Route
                     path="/write"
                     element={<PrivateRoute component={<Write />} />}
@@ -28,11 +41,11 @@ function Router() {
                     path="/detail/:id"
                     element={<PrivateRoute component={<Detail />} />} 
                 />
-                 <Route
+                <Route
                     path="/detail/:id/edit"
                     element={<PrivateRoute component={<Edit />} />} 
                 />
-                 <Route
+                <Route
                     path="/my"
                     element={<PrivateRoute component={<Info />} />} 
                 />

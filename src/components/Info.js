@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserInfo } from '../slices/userSlice'
+import PasswordInput from './ui/PasswordInput'
 
 function Info () {
     const navigate = useNavigate()
@@ -17,6 +18,7 @@ function Info () {
     const [userName, setUserName] = useState('')
     const [userEmail, setUserEmail] = useState('')
     const [newPassword, setNewPassword] = useState("")
+    const [newPasswordCheck, setNewPasswordCheck] = useState("")
 
     const [defaultImg, setDefaultImg] = useState('');
     const [newImg, setNewImg] = useState('');
@@ -68,7 +70,7 @@ function Info () {
             const { data: { data, message } } = res
             dispatch(setUserInfo(data))
             toast.success(message)
-            // navigate('/')
+            navigate('/')
             
         }).catch(err => {
             toast.error(err.response.data.message)
@@ -116,9 +118,16 @@ function Info () {
                             </div>
                             <label htmlFor="name-input" className={'mt-3'}>이름</label>
                             <input name="name" id="name-input" type="text" placeholder="이름" value={userName} onChange={inputChange}/>
-                            <label htmlFor="new-password-input" className={'mt-3'}>새로운 비밀번호</label>
-                            <input name="new-password" id="new-password-input" type="password" placeholder="이름" value={newPassword} onChange={inputChange}/>
-                            <Button className={styles.editBtn} type="submit">정보 수정</Button>
+                            <hr className='my-4' />
+                            <h5 className={styles.passwordChangeTitle}>비밀번호 변경</h5>
+                            <PasswordInput
+                                password={newPassword}
+                                passwordCheck={newPasswordCheck}
+                                setPassword={setNewPassword}
+                                setPasswordCheck={setNewPasswordCheck}
+                                inputChange={inputChange}
+                            />
+                            <Button className={styles.editBtn} type="submit" disabled={(newPassword !== '' || newPasswordCheck !== '') &&  newPassword !== newPasswordCheck}>정보 수정</Button>
                         </div>
                     </form>
                 </Col>

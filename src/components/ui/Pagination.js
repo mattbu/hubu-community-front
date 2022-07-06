@@ -1,30 +1,80 @@
-import { useEffect } from 'react'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { useEffect } from 'react';
+import { Container, Row, Col } from 'react-bootstrap'
 import styles from '../../scss/ui/Pagination.module.scss'
 
-function Pagination({ page, setPage, limit, total }) {
-    const numPages = Math.ceil(total / limit)
+function Pagination({ currentPage, setCurrentPage, perPage, total }) {
+    const pagesCount = Math.ceil(total / perPage)
+
+    let isPageNumberOutOfRange;
+
+    // const pageNumbers = Array(Math.ceil(total / perPage)).fill().map((_, i) => i + 1)
+
+    const pageNumbers = Array(Math.ceil(total / perPage)).fill().map((_, i) => {
+        const pageNumber = i + 1
+        const isPageNumberFirst = pageNumber === 1;
+        const isPageNumberLast = pageNumber === pagesCount;
+        const isCurrentPageWithinTwoPageNumbers = (Math.abs(pageNumber - currentPage) < 2);
+
+        if (isPageNumberFirst || isPageNumberLast || isCurrentPageWithinTwoPageNumbers) {
+            isPageNumberOutOfRange = false;
+            return (
+                <button
+                    key={pageNumber}
+                    type="button"
+                    className={styles.paginationPageBtn}
+                    onClick={() => setCurrentPage(i + 1)}
+                    aria-current={currentPage === i + 1 ? 'page' : null}
+                >{pageNumber}</button>
+            )
+        }
+
+        if (!isPageNumberOutOfRange) {
+            isPageNumberOutOfRange = true;
+            return (
+                <button key={`separator-${i}`} className={styles.paginationPageBtn}>...</button>
+            )
+        }
+        // return null;
+    })
   
     return (
         <Container className={styles.pagination}>
-           <Row>
-                <Col className={styles.paginationCol}>
-                    <nav>
-                        <Button onClick={() => setPage(page - 1)} disabled={page === 1}>{'<'}</Button>
-                        { Array(numPages).fill().map((_, i) => (
-                            <Button
-                                key={i + 1}
-                                onClick={() => setPage(i + 1)}
-                                aria-current={page === i + 1 ? "page" : null}
-                            >
-                                { i + 1 }
-                            </Button>  
-                        ))}
-                        <Button onClick={() => setPage(page + 1)} disabled={page === numPages}>{'>'}</Button>
-                    </nav>
-                </Col>
-           </Row>
-        </Container>
+        <Row>
+             <Col className={styles.paginationCol}>
+                 <nav>
+                     <button className={styles.paginationNavBtn} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>{'<'}</button>
+                     {pageNumbers}
+                     <button className={styles.paginationNavBtn} onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === pagesCount}>{'>'}</button>
+                 </nav>
+             </Col>
+        </Row>
+     </Container>
+
+        // <Container className={styles.pagination}>
+        //    <Row>
+        //         <Col className={styles.paginationCol}>
+        //             <nav>
+        //                 <button className={styles.paginationNavBtn} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>{'<'}</button>
+
+        //                 { pageNumbers.map((num, i) => (
+        //                     (i + 1 === 1) || (i + 1 === pageNumbers.length) || Math.abs(i + 1 === currentPage) <= 2 ?
+        //                     <button
+        //                         key={i + 1}
+        //                         type="button"
+        //                         className={styles.paginationPageBtn}
+        //                         onClick={() => setCurrentPage(i + 1)}
+        //                         aria-current={currentPage === i + 1 ? 'currentPage' : null}
+        //                     >
+        //                         { i + 1 }
+        //                     </button> : <span key={`seperator${i}`}>...</span>
+        //                 )) }
+
+        //                 {/* <button className={styles.paginationPageBtn}>...</button> */}
+        //                 <button className={styles.paginationNavBtn} onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === pagesCount}>{'>'}</button>
+        //             </nav>
+        //         </Col>
+        //    </Row>
+        // </Container>
     )
 }
 

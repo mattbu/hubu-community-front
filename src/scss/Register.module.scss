@@ -3,7 +3,7 @@
     .registerRow {
         padding: 0 1rem;
         justify-content: center;
-        min-height: 75vh;
+        min-height: 74vh;
     }
     .formContainer {
         align-self: center;
@@ -46,11 +46,12 @@
         }
     }
     .registerBtn {
+        margin-top: 38px;
         width: 100%;
         padding: 0.5rem 2rem;
-        margin-top: 32px;
         background-color: #51557E;
         border: none;
+        transition: opacity 200ms;
         &:hover {
             background-color: #51557E;
         }
@@ -63,5 +64,8 @@
             pointer-events: unset;
             cursor: not-allowed;
         }
+    }
+    .marginTest {
+        margin-top: 18px;
     }
 }

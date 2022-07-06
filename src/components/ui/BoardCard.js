@@ -14,7 +14,7 @@ function BoardCard({ post, getList, deletePost }) {
         <Container className={styles.card}>
             <Row>
                 <Col>
-                    <h5 onClick={() => navigate(`/detail/${post.id}`, {state:{post:post}})}>{post.title}</h5>
+                    <h5 className={styles.title} onClick={() => navigate(`/detail/${post.id}`, {state:{post:post}})}>{post.title}</h5>
                 </Col>
                 { currentUser.id === post.user_id ? <Col xs={3} className="text-right">
                     <Button className={styles.deleteBtn} onClick={(e) => deletePost(e, post.id)}><Trash2 color="tomato" size={20} /></Button>

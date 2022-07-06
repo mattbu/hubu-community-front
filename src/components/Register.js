@@ -7,6 +7,8 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { setToken } from '../slices/tokenSlice'
 import { setUserInfo } from '../slices/userSlice'
+import { useEffect } from 'react'
+import PasswordInput from './ui/PasswordInput'
 
 function Register() {
     let navigate = useNavigate()
@@ -92,7 +94,7 @@ function Register() {
     }
 
     const enableBtn = () => {
-        if (userId && userName && password && password.length >= 6) return true
+        if (userId && userName && password && password.length >= 6 && password === passwordCheck) return true
         return false
     }
 
@@ -124,6 +126,7 @@ function Register() {
             })
         }
     }
+  
     return (
         <>
             <Container className={styles.registerContainer}>
@@ -144,14 +147,37 @@ function Register() {
                             </Form.Group>
                             <div>
                                 <label htmlFor="id-input">아이디</label>
-                                <input name='id' id="id-input" type="text" placeholder="아이디를 입력해 주세요." value={userId} onChange={inputChange} aria-invalid={false}/>
+                                <input
+                                    name='id'
+                                    id="id-input"
+                                    type="text"
+                                    placeholder="아이디를 입력해 주세요."
+                                    value={userId}
+                                    onChange={inputChange}
+                                />
                                 <label htmlFor="name-input" className={'mt-3'}>이름</label>
-                                <input name='name' id="name-input" type="text" placeholder="이름을 입력해 주세요." value={userName} onChange={inputChange} />
-                                <label htmlFor="password-input" className={'mt-3'}>비밀번호</label>
-                                <input name="password" id="password-input" type="password" placeholder="비밀번호를 입력해 주세요." value={password} onChange={inputChange} />
-                                <label htmlFor="password-check-input" className={'mt-3'}>비밀번호 확인</label>
-                                <input name="password-check" id="password-check-input" type="password" placeholder="비밀번호" value={passwordCheck} onChange={inputChange} />
-                                <Button className={styles.registerBtn} type="submit" disabled={!enableBtn()}>회원가입</Button>
+                                <input
+                                    name='name'
+                                    id="name-input"
+                                    type="text"
+                                    placeholder="이름을 입력해 주세요."
+                                    value={userName}
+                                    onChange={inputChange}
+                                />
+                                <PasswordInput
+                                    password={password}
+                                    passwordCheck={passwordCheck}
+                                    setPassword={setPassword}
+                                    setPasswordCheck={setPasswordCheck}
+                                    inputChange={inputChange}
+                                />
+                                <Button
+                                    className={styles.registerBtn}
+                                    type="submit"
+                                    disabled={!enableBtn()}
+                                >
+                                    회원가입
+                                </Button>
                             </div>
                         </form>
                     </Col>

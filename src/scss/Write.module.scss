@@ -24,5 +24,9 @@
             box-shadow: none!important;
             background-color: #51557E;
         }
+        &:active {
+            transform: scale(0.98);
+            transition: all 100ms;
+        }
     }
 }

@@ -49,18 +49,29 @@
             }
         }
     }
+    .passwordChangeTitle {
+        font-family: 'NEXONFootballGothicBA1';
+        color: #51557E;
+        margin-bottom: 0;
+    }
     .editBtn {
         width: 100%;
         padding: 0.5rem 2rem;
         margin-top: 32px;
         background-color: #51557E;
         border: none;
+        transition: opacity 200ms;
         &:hover {
             background-color: #51557E;
         }
         &:focus {
             box-shadow: none!important;
             background-color: #51557E;
+        }
+        &:disabled {
+            background-color: #51557E;
+            pointer-events: unset;
+            cursor: not-allowed;
         }
     }
 }

@@ -1,12 +1,47 @@
 .pagination {
-    padding: 24px 0;
+    padding: 24px 0!important;
     &Row {
 
     }
     &Col {
         text-align: center;
+        padding: 0!important;
         button {
-            margin: 0 2px;
+            margin: 0 4px;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+        }
+    }
+    &PageBtn {
+        background-color: white;
+        color: #51557E;
+        border: solid 1px #d6d7e8!important;
+        &[aria-current="page"] {
+            background-color: #51557E;
+            color: white;
+            transition: all 600ms;
+        }
+        &:active {
+            transform: scale(0.85);
+        }
+    }
+    &NavBtn {
+        background-color: transparent;
+        color: #51557E;
+        &:first-child {
+            margin-right: 16px;
+        }
+        &:last-child {
+            margin-left: 16px;
+        }
+        &:active {
+            transform: scale(0.85);
+        }
+        &:disabled {
+            cursor: not-allowed;
+            transform: unset;
+            opacity: .5;
         }
     }
 }

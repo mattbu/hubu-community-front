@@ -10,6 +10,7 @@ import BoardCard from "./ui/BoardCard"
 import LoadingSpinner from "./ui/LoadingSpinner"
 import { useSelector } from "react-redux"
 import Pagination from "./ui/Pagination"
+import { useRef } from "react"
 
 function Boards() {
     let navigate = useNavigate()
@@ -17,7 +18,7 @@ function Boards() {
     
     const API_URL = process.env.REACT_APP_API_URL
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [lists, setLists] = useState([])
     const [orderBy, setOrderBy] = useState('desc')
 
@@ -84,11 +85,19 @@ function Boards() {
 
     useEffect(() => {
         getList(orderBy, currentPage)
-        console.log(currentPage);
     }, [currentPage])
+
+    const container = useRef(null)
+    useEffect(() => {
+        if (!isLoading) {
+            container.current.classList.remove(styles.start)
+            container.current.classList.add(styles.end)
+        } 
+    }, [isLoading])
+
     return (
         <> 
-            <Container className={styles.boardContainer}>
+            <Container ref={container} className={styles.boardContainer}>
                 <Row>
                     <Col>
                         <h1>커뮤니티</h1>
@@ -106,7 +115,7 @@ function Boards() {
                         </div>
                         {
                                 !isLoading ?
-                                <ul>
+                                <ul className={styles.listContainer}>
                                     { lists.length > 0 ? 
                                         lists.map(item => {
                                             return (
@@ -120,7 +129,7 @@ function Boards() {
                                 </ul> :
                             <LoadingSpinner />
                         }
-                        <Pagination page={currentPage} setPage={setCurrentPage} limit={limit} total={total} />
+                        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} perPage={limit} total={total} />
                     </Col>
                 </Row>
             </Container> 
