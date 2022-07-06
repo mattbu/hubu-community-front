@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../../slices/tokenSlice";
 import { setUserInfo } from "../../slices/userSlice";
 import { $axios } from "../../utils/axios";
-import { logRoles } from "@testing-library/react";
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 function Header() {
     let navigate = useNavigate()
@@ -18,21 +19,36 @@ function Header() {
 
     const dispatch = useDispatch()
 
-    const logout = async () => {
-        try {
-            const res = await $axios.delete(`${API_URL}/api/v1/logout`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+    const logout = () => {
+        confirmAlert({
+            title: 'HUBU',
+            message: '로그아웃을 하시겠어요?',
+            buttons: [
+              {
+                label: '확인',
+                onClick: async () => {
+                    try {
+                        const res = await $axios.delete(`${API_URL}/api/v1/logout`, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        })
+                        const { data:{ message } } = res
+                        toast.success(message)
+                        dispatch(setToken(null))
+                        dispatch(setUserInfo({}))
+                        navigate('/')
+                    } catch (err) {
+                        console.log(err);
+                    }
                 }
-            })
-            const { data:{ message } } = res
-            toast.success(message)
-            dispatch(setToken(null))
-            dispatch(setUserInfo({}))
-            navigate('/')
-        } catch (err) {
-            console.log(err);
-        }
+              },
+              {
+                label: '취소',
+                onClick: () => toast.error('로그아웃이 취소 되었습니다.')
+              }
+            ]
+          });
     }
     return (
         <Navbar bg="light" sticky="top" expand="lg" className={styles.headerContainer}>
