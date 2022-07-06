@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import styles from '../scss/Comments.module.scss'
 import { $axios } from "../utils/axios";
 import { Container, Row, Col, Button } from "react-bootstrap"
@@ -9,6 +9,7 @@ import { CornerDownRight, Trash2 } from 'react-feather';
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import LoadingSpinner from "./ui/LoadingSpinner";
+import Pagination from "./ui/Pagination";
 
 import CommentCard from "./ui/CommentCard";
 import { useSelector } from "react-redux";
@@ -18,23 +19,31 @@ function Comments() {
     const { token, user } = useSelector(state => state)
     const currentUser = user
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isPending, startTransition] = useTransition()
     const [comments, setComments] = useState([]);
+
+    const [perPage, setPerPage] = useState(1);
+    const [total, setTotal] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+
     const [comment, setComment] = useState('');
     const [reply, setReply] = useState('');
 
     let params = useParams()
 
-    const getComments = () => {
-        setIsLoading(true)
+    const getComments = (page) => {
         $axios.get(`/api/v1/comments/${params.id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
+            },
+            params: {
+                page: page
             }
         }).then(res => {
-            const { data } = res
-            setIsLoading(false)
+            const { data: {data, total, per_page} } = res
             setComments(data)
+            setTotal(total)
+            setPerPage(per_page)
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -55,7 +64,9 @@ function Comments() {
         }).then(res => {
             const {data: {message}} = res
             setReply('')
-            getComments()
+            startTransition(() => {
+                getComments()
+            })
             toast.success(message)
         }).catch(err => {
             console.log(err);
@@ -73,7 +84,9 @@ function Comments() {
         }).then(res => {
             const {data: {message}} = res
             setComment('')
-            getComments()
+            startTransition(() => {
+                getComments()
+            })
             toast.success(message)
         }).catch(err => {
             console.log(err);
@@ -108,7 +121,9 @@ function Comments() {
                     }).then(res => {
                         const { data: { message }} = res
                         toast.success(message)
-                        getComments()
+                        startTransition(() => {
+                            getComments()
+                        })
                     }).catch(err => {
                         toast.error(err.response.data.message)
                     })
@@ -127,8 +142,10 @@ function Comments() {
         input.hidden = !input.hidden
     }
     useEffect(() => {
-        getComments()
-    }, [])
+        startTransition(() => {
+            getComments(currentPage)
+        })
+    }, [currentPage])
     return (
         <Container>
             <Row>
@@ -142,8 +159,8 @@ function Comments() {
                         </form>
                     </div>
                     {
-                        isLoading ? <LoadingSpinner />
-                         : !isLoading && comments.length > 0 ? comments.map(comment => {
+                        isPending ? <LoadingSpinner />
+                         : !isPending && comments.length > 0 ? comments.map(comment => {
                             return (
                                 <Container key={comment.id} className={styles.commentCard}>
                                 <Row>
@@ -200,6 +217,7 @@ function Comments() {
                                 <p>댓글을 남겨보세요! ✍🏻</p>  
                             </div> 
                     }
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} perPage={perPage} total={total} />
                 </Col>
             </Row>
         </Container>

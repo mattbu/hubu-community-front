@@ -94,8 +94,8 @@ function Info () {
         <Container className={styles.infoContainer}>
             <Row className={styles.infoRow}>
                 <Col xs={12} sm={12} md={8} lg={6} xl={4} className={styles.formContainer}>
-                    <h1>마이페이지</h1>
-                    <p>회원 정보를 변경해 보세요. 🔄</p>
+                    <h1>내 정보</h1>
+                    <p>내 정보를 수정 하실 수 있습니다. 🔄</p>                    
                     <form onSubmit={editInfo} className={styles.infoContainerForm}>
                         <Form.Group controlId="formFile" className={`${styles.avatarFileGroup} mb-3`}>
                             <Form.Label>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { useNavigate } from "react-router-dom"
 import styles from '../scss/Boards.module.scss'
 import { $axios } from "../utils/axios"
@@ -10,7 +10,6 @@ import BoardCard from "./ui/BoardCard"
 import LoadingSpinner from "./ui/LoadingSpinner"
 import { useSelector } from "react-redux"
 import Pagination from "./ui/Pagination"
-import { useRef } from "react"
 
 function Boards() {
     let navigate = useNavigate()
@@ -18,39 +17,39 @@ function Boards() {
     
     const API_URL = process.env.REACT_APP_API_URL
 
-    const [isLoading, setIsLoading] = useState(true)
+    const [isPending, startTransition] = useTransition()
     const [lists, setLists] = useState([])
     const [orderBy, setOrderBy] = useState('desc')
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [limit, setLimit] = useState(1)
+    const [perPage, setPerPage] = useState(1)
     const [total, setTotal] = useState(1)
 
     const getList = async (orderBy, page) => {
         try {
-            setIsLoading(true)
             const res = await $axios.get(`${API_URL}/api/v1/boards`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
                 params: {
                     'order_by': orderBy,
-                    page: currentPage
+                    page: page
                 }
             })
             const { data: { data, per_page, total } } = res
             setLists(data)
-            setLimit(per_page)
+            setPerPage(per_page)
             setTotal(total)
-            setIsLoading(false)
         } catch (err) {
             console.log(err);
         }
     }
 
     const changeOrder = (order) => {
-        setOrderBy(order)
-        getList(order)
+        startTransition(() => {
+            setOrderBy(order)
+            getList(order)
+        })
     }
 
     const deletePost = (e, id) => {
@@ -84,20 +83,14 @@ function Boards() {
     }
 
     useEffect(() => {
-        getList(orderBy, currentPage)
+        startTransition(() => {
+            getList(orderBy, currentPage)
+        })
     }, [currentPage])
-
-    const container = useRef(null)
-    useEffect(() => {
-        if (!isLoading) {
-            container.current.classList.remove(styles.start)
-            container.current.classList.add(styles.end)
-        } 
-    }, [isLoading])
 
     return (
         <> 
-            <Container ref={container} className={styles.boardContainer}>
+            <Container className={styles.boardContainer}>
                 <Row>
                     <Col>
                         <h1>커뮤니티</h1>
@@ -114,8 +107,8 @@ function Boards() {
                             <Button className={orderBy === 'asc' ? styles.orderBtnActive : styles.orderBtn} onClick={() => changeOrder('asc')}>등록순</Button>
                         </div>
                         {
-                                !isLoading ?
-                                <ul className={styles.listContainer}>
+                            isPending ? <LoadingSpinner /> :
+                                <ul>
                                     { lists.length > 0 ? 
                                         lists.map(item => {
                                             return (
@@ -126,10 +119,9 @@ function Boards() {
                                         })
                                         : <h3 className={styles.noContent}>등록된 게시글이 없습니다.</h3>
                                     }
-                                </ul> :
-                            <LoadingSpinner />
+                                </ul>
                         }
-                        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} perPage={limit} total={total} />
+                        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} perPage={perPage} total={total} />
                     </Col>
                 </Row>
             </Container> 

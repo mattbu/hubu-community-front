@@ -21,7 +21,7 @@ function UserDropdown({ userInfo, logout }) {
             <ul id="dropdown-menu" className={styles.userDropdownMenu}>
                 <li className={styles.userDropdownMenuItem}>
                     <Button>
-                        <Link to="/my">마이페이지</Link>
+                        <Link to="/my">내 정보</Link>
                     </Button>
                 </li>
                 <li className={styles.userDropdownMenuItem}>

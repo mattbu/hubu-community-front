@@ -24,7 +24,9 @@ function Pagination({ currentPage, setCurrentPage, perPage, total }) {
                     className={styles.paginationPageBtn}
                     onClick={() => setCurrentPage(i + 1)}
                     aria-current={currentPage === i + 1 ? 'page' : null}
-                >{pageNumber}</button>
+                >
+                    {pageNumber}
+                </button>
             )
         }
 

@@ -12,19 +12,24 @@ import { useSelector } from "react-redux"
 import { useRef } from "react"
 import { useEffect } from "react"
 import { useState } from "react"
+
 function Router() {
     const { token } = useSelector(state => state)
     const container = useRef(null)
     const { pathname } = useLocation()
     const [fade, setFade] = useState('')
     useEffect(() => {
+        let fadeTimer
         if (container) {
-            setFade('end')
+            fadeTimer = setTimeout(() => {
+                setFade('end')
+            }, 100)
         }
         return () => {
+            clearTimeout(fadeTimer)
             setFade('')
         }
-    })
+    }, [pathname])
     
     return (
         <div ref={container} className={`main-container start ${fade}`} >

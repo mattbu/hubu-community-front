@@ -18,20 +18,8 @@
     word-break: keep-all;   // 문단으로 끊어져서 줄바꿈 됨
 }
 
-.start {
-    opacity: 0;
-}
-
-.end {
-    opacity: 1;
-    transition : opacity 500ms;
-}
-
 .boardContainer {
     padding-bottom: 32px;
-    .listContainer {
-        min-height: 556px;
-    }
     .writeBtn {
         padding: 0.5rem 1rem;
         background-color: #51557E;
