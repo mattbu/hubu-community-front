@@ -1,3 +1,11 @@
+@mixin dropdown-menu-buttons($buttonTextColor) {
+    width: 90%;
+    font-family: 'HallymGothic-Regular';
+    background-color: transparent;
+    color: $buttonTextColor;
+    text-align: left;
+}
+
 .userDropdown {
     position: relative;
     display: inline-flex;
@@ -27,16 +35,28 @@
             background-color: #fff;
             box-shadow: 0 4px 9px 0 rgba(63, 65, 80, 0.1);
             button {
-                background-color: transparent;
-                color: #51557E;
-                &:hover{
-                    background-color: white;
-                    color: #51557E; 
-                }
-                &:focus{
-                    background-color: transparent;
-                    color: transparent; 
-                    box-shadow: none!important;
+                @include dropdown-menu-buttons(#51557E);
+                position: relative;
+                &:after {
+                    content: '';
+                    width: 0;
+                    position: absolute;
+                    left: 0;
+                    bottom: 4px;
+                    z-index: -1;
+                    border-bottom: solid 12px #e6e7f8;
+                    transition: width 300ms;
+                  }
+                &:hover {
+                    &:after {
+                        content: '';
+                        width: 90%;
+                        position: absolute;
+                        left: 0;
+                        bottom: 4px;
+                        z-index: -1;
+                        border-bottom: solid 12px #e6e7f8;
+                      }
                 }
                 a {
                     text-decoration: none;
@@ -46,18 +66,9 @@
             }
           }
           &Item {
+            padding: 6px 0;
             button {
-                background-color: transparent;
-                color: transparent;
-                &:hover {
-                    background-color: transparent;
-                    color: transparent;
-                }
-                &:focus,&:active{
-                    background-color: transparent!important;
-                    color: transparent!important;
-                    box-shadow: none!important;
-                }
+                @include dropdown-menu-buttons(transparent);
                 a {
                     text-decoration: none;
                     color: transparent;

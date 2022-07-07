@@ -11,7 +11,11 @@ function UserDropdown({ userInfo, logout }) {
     }
     return (
         <div className={styles.userDropdown}>
-            <button className={styles.userDropdownToggle} onClick={() => toggleDropdown('toggle')} onBlur={() => toggleDropdown('remove')}>
+            <button
+                className={styles.userDropdownToggle}
+                onClick={() => toggleDropdown('toggle')}
+                onBlur={() => toggleDropdown('remove')}
+            >
                 { userInfo.avatar_img ?
                 <div className={styles.avatarPreview}><img src={userInfo.avatar_img}/></div>
                 : <div className={styles.avatarDefault} />
@@ -20,12 +24,12 @@ function UserDropdown({ userInfo, logout }) {
             </button>
             <ul id="dropdown-menu" className={styles.userDropdownMenu}>
                 <li className={styles.userDropdownMenuItem}>
-                    <Button>
+                    <button>
                         <Link to="/my">내 정보</Link>
-                    </Button>
+                    </button>
                 </li>
                 <li className={styles.userDropdownMenuItem}>
-                    <Button onClick={logout}>로그아웃</Button>
+                    <button onClick={logout}>로그아웃</button>
                 </li>
             </ul>
         </div>
