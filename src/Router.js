@@ -12,6 +12,7 @@ import { useSelector } from "react-redux"
 import { useRef } from "react"
 import { useEffect } from "react"
 import { useState } from "react"
+import Favorite from "./components/Favorite"
 
 function Router() {
     const { token } = useSelector(state => state)
@@ -53,6 +54,10 @@ function Router() {
                 <Route
                     path="/my"
                     element={<PrivateRoute component={<Info />} />} 
+                />
+                 <Route
+                    path="/favorites"
+                    element={<PrivateRoute component={<Favorite />} />} 
                 />
                 <Route path="/login" element={ !token ? <Login /> : <Navigate to="/"></Navigate>}></Route>
                 <Route path="/register" element={<Register />}></Route>

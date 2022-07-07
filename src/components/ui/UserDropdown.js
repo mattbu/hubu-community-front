@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom'
 import styles from '../../scss/ui/UserDropdown.module.scss'
-import { Button } from 'react-bootstrap'
-import { useEffect } from 'react'
 
 function UserDropdown({ userInfo, logout }) {
     const toggleDropdown = (type) => {
@@ -26,6 +24,11 @@ function UserDropdown({ userInfo, logout }) {
                 <li className={styles.userDropdownMenuItem}>
                     <button>
                         <Link to="/my">내 정보</Link>
+                    </button>
+                </li>
+                <li className={styles.userDropdownMenuItem}>
+                    <button>
+                        <Link to="/favorites">내가 좋아요한 게시글</Link>
                     </button>
                 </li>
                 <li className={styles.userDropdownMenuItem}>
