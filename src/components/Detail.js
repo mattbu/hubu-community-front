@@ -8,6 +8,8 @@ import Comments from './Comments';
 import LoadingSpinner from './ui/LoadingSpinner';
 import { useSelector } from 'react-redux';
 import { ThumbsUp } from 'react-feather';
+import { $axios } from '../utils/axios';
+import { toast } from 'react-toastify'
 
 function Detail() {
     const { token, user } = useSelector(state => state) 
@@ -27,7 +29,26 @@ function Detail() {
                 'Authorization': `Bearer ${token}`
             }
         })
-        setDetail(res.data)
+        const {data} = res
+        setDetail(data)
+        setLiked(data.is_liked_by_me)
+    }
+
+    const clickLike = () => {
+        $axios.post(`${API_URL}/api/v1/board/like`, {
+            id: params.id
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(res => {
+            res.data.message && toast.success(res.data.message)
+            startTransition(() => {
+                getDetail()
+            })
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
     useEffect(() => {
@@ -67,7 +88,7 @@ function Detail() {
                                 }
                                 <button
                                     className={ liked ? `${styles.likeBtn} ${styles.clicked}` : `${styles.likeBtn}`}
-                                    onClick={() => setLiked(current => !current)}
+                                    onClick={clickLike}
                                 ><ThumbsUp size={20} color={'#5584AC'} />
                                 </button>
                             </Col>

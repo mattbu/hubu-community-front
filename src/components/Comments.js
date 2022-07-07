@@ -23,7 +23,7 @@ function Comments() {
     const [comments, setComments] = useState([]);
 
     const [perPage, setPerPage] = useState(1);
-    const [total, setTotal] = useState(1);
+    const [total, setTotal] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
 
     const [comment, setComment] = useState('');

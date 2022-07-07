@@ -13,7 +13,7 @@ import Pagination from "./ui/Pagination"
 
 function Boards() {
     let navigate = useNavigate()
-    const { token } = useSelector(state => state)
+    const { token, user } = useSelector(state => state)
     
     const API_URL = process.env.REACT_APP_API_URL
 
@@ -33,7 +33,8 @@ function Boards() {
                 },
                 params: {
                     'order_by': orderBy,
-                    page: page
+                    page: page,
+                    user_id: user.id
                 }
             })
             const { data: { data, per_page, total } } = res
