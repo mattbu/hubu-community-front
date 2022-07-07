@@ -1,58 +1,90 @@
 .detailContainer {
     margin: 60px 0;
-    .userInfoColumn {
-        display: flex;
+    h1 {
+        word-wrap: break-word;
+    }
+    .userInfoRow {
         margin-top: 16px;
-        .avatarPreview {
-            display: inline-flex;
-            width: 40px;
-            height: 40px;
-            background-color: transparent;
-            object-fit: contain;
-            border-radius: 50%;
-            margin-right: 12px;
-            img {
-                width: 100%;
-                height: 100%;
-                max-height: auto;
-                border-radius: inherit;
-                object-fit: cover;
+        .userInfoColumn {
+            display: flex;
+            .avatarPreview {
+                display: inline-flex;
+                width: 40px;
+                height: 40px;
+                background-color: transparent;
+                object-fit: contain;
+                border-radius: 50%;
+                margin-right: 12px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    max-height: auto;
+                    border-radius: inherit;
+                    object-fit: cover;
+                }
             }
-        }
-        .avatarDefault {
-            display: inline-flex;
-            width: 40px;
-            height: 40px;
-            background-color: #51557E;
-            object-fit: contain;
-            border-radius: 50%;
-            margin-right: 12px;
-        }
-        .userInfo {
-            align-self: center;
-            color: #51557E;
-            font-size: 12px;
-            .userEmail {
-                color: #a2a5cd;
-                font-size: 12px;
+            .avatarDefault {
+                display: inline-flex;
+                width: 40px;
+                height: 40px;
+                background-color: #51557E;
+                object-fit: contain;
+                border-radius: 50%;
+                margin-right: 12px;
             }
-            .postDate {
-                color: #a5a5a5;
+            .userInfo {
+                align-self: center;
+                color: #51557E;
                 font-size: 12px;
-                margin: 0;
+                .userEmail {
+                    color: #a2a5cd;
+                    font-size: 12px;
+                }
+                .postDate {
+                    color: #a5a5a5;
+                    font-size: 12px;
+                    margin: 0;
+                }
+            }
+            &Right {
+                button {
+                    margin-left: 15px;
+                    &.editBtn {
+                        padding: 0.5rem 1rem;
+                        background-color: #51557E;
+                        border: none;
+                        &:hover {
+                            background-color: #51557E;
+                        }
+                        &:focus {
+                            background-color: #51557E;
+                            box-shadow: none!important;
+                        }
+                        &:active {
+                            transform: scale(0.95);
+                            transition: all 100ms;
+                        }
+                    }
+                    &.likeBtn {
+                        padding: 0.5rem 1rem;
+                        background-color: transparent;
+                        &:active {
+                            transform: scale(0.8);
+                            transition: all 100ms;
+                        }
+                        &.clicked {
+                            svg {
+                                fill: #355b8c;
+                            }
+                        }
+                    }
+                }   
             }
         }
     }
     .description {
         margin-top: 20px;
         white-space: pre-wrap;
-    }
-    .editBtn {
-        padding: 0.5rem 1rem;
-        background-color: #51557E;
-        border: none;
-        &:hover {
-            background-color: #51557E;
-        }
+        word-wrap: break-word;
     }
 }

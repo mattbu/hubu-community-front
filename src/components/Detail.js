@@ -7,6 +7,7 @@ import { Button, Container, Row, Col } from 'react-bootstrap'
 import Comments from './Comments';
 import LoadingSpinner from './ui/LoadingSpinner';
 import { useSelector } from 'react-redux';
+import { ThumbsUp } from 'react-feather';
 
 function Detail() {
     const { token, user } = useSelector(state => state) 
@@ -18,6 +19,8 @@ function Detail() {
 
     const [isPending, startTransition] = useTransition()
     const [detail, setDetail] = useState({})
+    const [liked, setLiked] = useState(false)
+
     const getDetail = async () => {
         const res = await axios.get(`${API_URL}/api/v1/boards/${params.id}`, {
             headers: {
@@ -26,11 +29,13 @@ function Detail() {
         })
         setDetail(res.data)
     }
+
     useEffect(() => {
         startTransition(() => {
             getDetail()
         })
     }, [])
+
     return (
         <>
             { isPending ? <LoadingSpinner spinnerPadding={styles.detailContainer} /> :
@@ -40,14 +45,9 @@ function Detail() {
                             <Col>
                                 <h1>{detail.title}</h1>
                             </Col>
-                            { currentUser.id === detail.user?.id ? 
-                                <Col xs={3} className="text-right">
-                                    <Button className={styles.editBtn} onClick={() => navigate(`/detail/${params.id}/edit`, { state: {task: detail}})}>수정</Button>
-                                </Col> : null 
-                            }
                         </Row>
-                        <Row>
-                            <Col className={styles.userInfoColumn}>
+                        <Row className={styles.userInfoRow}>
+                            <Col sm={6} className={styles.userInfoColumn}>
                                 { detail.user?.avatar_img ? <div className={styles.avatarPreview}><img src={detail.user?.avatar_img}/></div> 
                                 : <div className={styles.avatarDefault} />
                                 }
@@ -58,6 +58,21 @@ function Detail() {
                                     <p className={styles.postDate}>{moment(detail.created_at).format('YYYY-MM-DD hh:mm')}</p>
                                 </span>
                             </Col>
+                            <Col sm={6} className={`${styles.userInfoColumnRight} text-right`}>
+                                { currentUser.id === detail.user?.id ? 
+                                    <Button 
+                                        className={styles.editBtn}
+                                        onClick={() => navigate(`/detail/${params.id}/edit`, { state: {task: detail}})}
+                                    >수정</Button> : null
+                                }
+                                <button
+                                    className={ liked ? `${styles.likeBtn} ${styles.clicked}` : `${styles.likeBtn}`}
+                                    onClick={() => setLiked(current => !current)}
+                                ><ThumbsUp size={20} color={'#5584AC'} />
+                                </button>
+                            </Col>
+                        </Row>
+                        <Row>
                             <Col xs={12}>
                                 <hr />
                                 <p className={styles.description}>{detail.description}</p>

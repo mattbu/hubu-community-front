@@ -16,7 +16,7 @@ function CommentCard({ reply }) {
                     </span>
                 </Col>
                 <Col xs={12} className="mt-2">
-                    {reply.comment}
+                    <p className={styles.comment}>{reply.comment}</p>
                 </Col>
             </Row>
         </Container>

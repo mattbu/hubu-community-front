@@ -181,7 +181,7 @@ function Comments() {
                                 </Row>
                                 <Row className="mt-2">
                                     <Col>
-                                        {comment.comment}
+                                        <p className={styles.comment}>{comment.comment}</p>
                                     </Col>
                                     <Col xs={3} md={4} className="text-right ps-0">
                                         <Button className={styles.replyBtn} onClick={() => openReplyInput(comment.id)} type="button">답글쓰기</Button>
@@ -217,7 +217,7 @@ function Comments() {
                                 <p>댓글을 남겨보세요! ✍🏻</p>  
                             </div> 
                     }
-                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} perPage={perPage} total={total} />
+                    { comments.length > 0 && <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} perPage={perPage} total={total} /> }
                 </Col>
             </Row>
         </Container>
