@@ -46,9 +46,7 @@ function Detail() {
             }
         }).then(res => {
             res.data.message && toast.success(res.data.message)
-            startTransition(() => {
-                getDetail()
-            })
+            getDetail()
         }).catch(err => {
             console.log(err);
         })
