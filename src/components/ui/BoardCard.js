@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import { Button, Container, Row, Col, Card } from 'react-bootstrap'
-import styles from '../../scss/Boards.module.scss'
+import { Button, Container, Row, Col } from 'react-bootstrap'
+import styles from '../../scss/ui/BoardCard.module.scss'
 import moment from "moment"
-import { Trash2, MessageCircle, ThumbsUp } from 'react-feather';
+import { Trash2, MessageCircle, Heart } from 'react-feather';
 import { useSelector } from "react-redux";
 
 
@@ -40,8 +40,8 @@ function BoardCard({ post, getList, deletePost }) {
                     <p className={styles.description}>{post.description}</p>
                 </Col>
                 <Col className="text-right align-self-center pe-0">
-                    <ThumbsUp size={16} color={'#51557E'} />
-                    <span className={styles.commentsLength}>{post.comments.length}</span>
+                    <Heart size={16} color={'#51557E'} />
+                    <span className={styles.commentsLength}>{post.likes}</span>
                 </Col>
                 <Col className="text-right align-self-center ps-0">
                     <MessageCircle size={16} color={'#51557E'} />

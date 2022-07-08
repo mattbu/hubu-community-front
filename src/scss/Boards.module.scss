@@ -1,23 +1,3 @@
-@mixin order-btn($orderBtnColor) {
-    padding: 0;
-    margin-right: 16px;
-    background-color: transparent;
-    color: $orderBtnColor;
-    &:focus {
-        box-shadow: none;
-    }
-}
-
-@mixin ellipse($paragraphNumber) {
-    overflow: hidden;
-    white-space: pre-wrap;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: $paragraphNumber;
-    -webkit-box-orient: vertical;
-    word-break: keep-all;   // 문단으로 끊어져서 줄바꿈 됨
-}
-
 .boardContainer {
     padding-bottom: 32px;
     .writeBtn {
@@ -36,99 +16,9 @@
             transition: all 100ms;
         }
     }
-    .orderBtnContainer {
-        margin-top: 40px;
-        .orderBtnActive {
-            $orderBtnColor: #51557E;
-            @include order-btn($orderBtnColor);
-        }
-        .orderBtn {
-            $orderBtnColor: #a2a5cd;
-            @include order-btn($orderBtnColor);
-        }
-    }
     li {
         &:first-child {
             margin-top: 20px;
-        }
-    }
-    .card {
-        // min-height: 180px;
-        background-color: white;
-        box-shadow: 10px 5px 20px 5px rgba(0,0,0,0.01);
-        border-radius: 12px;
-        padding: 20px 24px 1px 24px;
-        margin-bottom: 8px;
-        .avatarColumn {
-            display: flex;
-            .avatarPreview {
-                display: inline-flex;
-                width: 40px;
-                height: 40px;
-                background-color: transparent;
-                object-fit: contain;
-                border-radius: 50%;
-                margin-right: 12px;
-                img {
-                    width: 100%;
-                    height: 100%;
-                    max-height: auto;
-                    border-radius: inherit;
-                    object-fit: cover;
-                }
-            }
-            .avatarDefault {
-                display: inline-flex;
-                width: 40px;
-                height: 40px;
-                background-color: #51557E;
-                object-fit: contain;
-                border-radius: 50%;
-                margin-right: 12px;
-            }
-        }
-        h5 {
-            cursor: pointer;
-        }
-        .userInfo {
-            align-self: center;
-            color: #51557E;
-            font-size: 12px;
-            .userEmail {
-                color: #a2a5cd;
-                font-size: 12px;
-            }
-            .postDate {
-                color: #a5a5a5;
-                font-size: 12px;
-                margin: 0;
-            }
-        }
-        .title {
-            @include ellipse(2);
-        }
-        .description {
-            margin-top: 20px;
-            font-size: 13px;
-            @include ellipse(1);
-        }
-        .deleteBtn {
-            padding: 0; 
-            background-color: transparent;
-            border: none;
-            &:hover {
-                background-color: transparent;
-            }
-            &:focus {
-                box-shadow: none!important;
-                background-color: transparent;
-            }
-        }
-        .commentsLength {
-            vertical-align: middle;
-            color: #51557E;
-            margin-left: 4px;
-            font-size: 14px;
         }
     }
     .noContent {

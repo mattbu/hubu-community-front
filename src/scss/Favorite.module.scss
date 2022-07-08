@@ -1,0 +1,24 @@
+.favoriteContainer {
+    padding-bottom: 32px;
+    .listContainer {
+        li {
+            &:first-child {
+                margin-top: 20px;
+            }
+        }
+    }
+    .noContent {
+        margin-top: 120px;
+        text-align: center;
+        .toCommunityBtn {
+            background-color: #51557E;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            a {
+                font-family: 'NEXONFootballGothicBA1';
+                color: white;
+                text-decoration: none;
+            }
+        }
+    }
+}

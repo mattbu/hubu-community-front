@@ -7,7 +7,7 @@ import { Button, Container, Row, Col } from 'react-bootstrap'
 import Comments from './Comments';
 import LoadingSpinner from './ui/LoadingSpinner';
 import { useSelector } from 'react-redux';
-import { ThumbsUp } from 'react-feather';
+import { Heart } from 'react-feather';
 import { $axios } from '../utils/axios';
 import { toast } from 'react-toastify'
 
@@ -22,6 +22,7 @@ function Detail() {
     const [isPending, startTransition] = useTransition()
     const [detail, setDetail] = useState({})
     const [liked, setLiked] = useState(false)
+    const [likeCount, setLikeCount] = useState(0)
 
     const getDetail = async () => {
         const res = await axios.get(`${API_URL}/api/v1/boards/${params.id}`, {
@@ -29,8 +30,10 @@ function Detail() {
                 'Authorization': `Bearer ${token}`
             }
         })
-        const {data} = res
+        const { data: { data, likes } } = res
+        console.log(res);
         setDetail(data)
+        setLikeCount(likes)
         setLiked(data.is_liked_by_me)
     }
 
@@ -89,7 +92,9 @@ function Detail() {
                                 <button
                                     className={ liked ? `${styles.likeBtn} ${styles.clicked}` : `${styles.likeBtn}`}
                                     onClick={clickLike}
-                                ><ThumbsUp size={20} color={'#5584AC'} />
+                                >
+                                    <Heart size={20} color={'#51557E'} />
+                                    <span>Like {likeCount}</span>
                                 </button>
                             </Col>
                         </Row>

@@ -10,6 +10,7 @@ import BoardCard from "./ui/BoardCard"
 import LoadingSpinner from "./ui/LoadingSpinner"
 import { useSelector } from "react-redux"
 import Pagination from "./ui/Pagination"
+import OrderByButton from "./ui/OrderByButton"
 
 function Boards() {
     let navigate = useNavigate()
@@ -19,20 +20,19 @@ function Boards() {
 
     const [isPending, startTransition] = useTransition()
     const [lists, setLists] = useState([])
-    const [orderBy, setOrderBy] = useState('desc')
 
     const [currentPage, setCurrentPage] = useState(1)
     const [perPage, setPerPage] = useState(1)
     const [total, setTotal] = useState(1)
 
-    const getList = async (orderBy, page) => {
+    const getList = async (orderBy = 'desc', page = 1) => {
         try {
             const res = await $axios.get(`${API_URL}/api/v1/boards`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
                 params: {
-                    'order_by': orderBy,
+                    order_by: orderBy,
                     page: page,
                     user_id: user.id
                 }
@@ -44,13 +44,6 @@ function Boards() {
         } catch (err) {
             console.log(err);
         }
-    }
-
-    const changeOrder = (order) => {
-        startTransition(() => {
-            setOrderBy(order)
-            getList(order)
-        })
     }
 
     const deletePost = (e, id) => {
@@ -85,7 +78,7 @@ function Boards() {
 
     useEffect(() => {
         startTransition(() => {
-            getList(orderBy, currentPage)
+            getList('desc', currentPage)
         })
     }, [currentPage])
 
@@ -103,10 +96,7 @@ function Boards() {
                 </Row>
                 <Row>
                     <Col>
-                        <div className={styles.orderBtnContainer}>
-                            <Button className={orderBy === 'desc' ? styles.orderBtnActive : styles.orderBtn} onClick={() => changeOrder('desc')}>최신순</Button>
-                            <Button className={orderBy === 'asc' ? styles.orderBtnActive : styles.orderBtn} onClick={() => changeOrder('asc')}>등록순</Button>
-                        </div>
+                        <OrderByButton getList={getList} />
                         {
                             isPending ? <LoadingSpinner /> :
                                 <ul>
@@ -122,7 +112,7 @@ function Boards() {
                                     }
                                 </ul>
                         }
-                        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} perPage={perPage} total={total} />
+                        {lists.length > 0 && <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} perPage={perPage} total={total} />}
                     </Col>
                 </Row>
             </Container> 

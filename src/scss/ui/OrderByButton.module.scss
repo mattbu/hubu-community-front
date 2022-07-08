@@ -1,0 +1,18 @@
+@mixin order-btn($orderBtnColor) {
+    padding: 0;
+    margin-right: 16px;
+    background-color: transparent;
+    color: $orderBtnColor;
+}
+
+.orderBtnContainer {
+    margin-top: 40px;
+    .orderBtnActive {
+        $orderBtnColor: #51557E;
+        @include order-btn($orderBtnColor);
+    }
+    .orderBtn {
+        $orderBtnColor: #a2a5cd;
+        @include order-btn($orderBtnColor);
+    }
+}
