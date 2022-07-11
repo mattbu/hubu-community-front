@@ -75,15 +75,16 @@
                         background-color: transparent;
                         border: none;
                         box-shadow: 0px 0px 0px 1px #51557E inset;
-                        &:active {
-                            transform: scale(0.8);
-                            transition: all 100ms;
-                        }
                         span {
+                            vertical-align: middle;
                             color: #51557E;
                             margin-left: 6px;
                             font-size: 13px;
-                        }                   
+                        }    
+                        &:active {
+                            transform: scale(0.8);
+                            transition: all 100ms;
+                        }               
                         &.clicked {
                             svg {
                                 fill: #51557E;
