@@ -25,7 +25,7 @@ function Pagination({ currentPage, setCurrentPage, perPage, total }) {
                     onClick={() => setCurrentPage(i + 1)}
                     aria-current={currentPage === i + 1 ? 'page' : null}
                 >
-                    {pageNumber}
+                    <span>{pageNumber}</span>
                 </button>
             )
         }
@@ -33,7 +33,7 @@ function Pagination({ currentPage, setCurrentPage, perPage, total }) {
         if (!isPageNumberOutOfRange) {
             isPageNumberOutOfRange = true;
             return (
-                <button key={`separator-${i}`} className={styles.paginationPageBtn}>...</button>
+                <button key={`separator-${i}`} className={styles.paginationPageBtn}><span>...</span></button>
             )
         }
         // return null;
@@ -44,9 +44,13 @@ function Pagination({ currentPage, setCurrentPage, perPage, total }) {
         <Row>
              <Col className={styles.paginationCol}>
                  <nav>
-                     <button className={styles.paginationNavBtn} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>{'<'}</button>
+                     <button className={styles.paginationNavBtn} onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+                        <span>{'<'}</span>
+                     </button>
                      {pageNumbers}
-                     <button className={styles.paginationNavBtn} onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === pagesCount}>{'>'}</button>
+                     <button className={styles.paginationNavBtn} onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === pagesCount}>
+                        <span>{'>'}</span>
+                     </button>
                  </nav>
              </Col>
         </Row>
