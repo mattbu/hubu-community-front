@@ -9,6 +9,8 @@
         button {
             margin: 0 4px;
             border-radius: 50%;
+            -moz-border-raius: 50%;
+            -webkit-border-radius: 50%;
             width: 32px;
             height: 32px;
         }
