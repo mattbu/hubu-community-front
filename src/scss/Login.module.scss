@@ -30,6 +30,10 @@
             box-shadow: none!important;
             background-color: #51557E;
         }
+        &:active {
+            transform: scale(0.95);
+            transition: all 100ms;
+        }
     }
     .loginLink {
         margin-top: 16px;

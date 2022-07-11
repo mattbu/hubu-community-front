@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styles from '../../scss/ui/UserDropdown.module.scss'
-import { isMobile, isIOS } from 'react-device-detect'
+import { isIOS } from 'react-device-detect'
 
 function UserDropdown({ userInfo, logout }) {
     const toggleDropdown = (type) => {
@@ -8,14 +8,13 @@ function UserDropdown({ userInfo, logout }) {
         if (type === 'toggle') dropdownMenu.classList.toggle(styles.show)
         else dropdownMenu.classList.remove(styles.show)
     }
-    console.log(isIOS);
     return (
         <div className={styles.userDropdown}>
             <button
                 className={styles.userDropdownToggle}
                 onClick={() => toggleDropdown('toggle')}
                 onBlur={() => toggleDropdown('remove')}
-                onMouseOut={isMobile ? () => toggleDropdown('remove') : null}
+                onMouseOut={isIOS ? () => toggleDropdown('remove') : null}
             >
                 { userInfo.avatar_img ?
                 <div className={styles.avatarPreview}><img src={userInfo.avatar_img}/></div>

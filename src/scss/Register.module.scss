@@ -63,6 +63,13 @@
             background-color: #51557E;
             pointer-events: unset;
             cursor: not-allowed;
+            &:active {
+                transform: unset;
+            }
+        }
+        &:active {
+            transform: scale(0.95);
+            transition: all 100ms;
         }
     }
     .marginTest {
