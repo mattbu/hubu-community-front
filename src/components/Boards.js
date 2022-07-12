@@ -42,7 +42,7 @@ function Boards() {
             setPerPage(per_page)
             setTotal(total)
         } catch (err) {
-            console.log(err);
+            console.log(err)
         }
     }
 
